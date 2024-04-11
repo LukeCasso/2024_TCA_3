@@ -1,35 +1,67 @@
 ---
 title: "2024 - TCA - Survey - 1"
 author: "Niall McGuinness"
-format: pdf
+format: html
 date: "2024-04-11"
 ---
 
+### Overview
+- What survey was conducted?
+- When and with whom was it conducted? (date, N (M, F, O))
+- How do the participants breakdown in terms of demographic?
+(sampling method (random, stratified, cluster, convenience), age, preference)
+- Who conducted the survey?
+- What was the purpose of the survey?
+- How were the results gathered?
+- How was user-testing carried out? conditions? (online, in-person, etc.)
+- What were the pre-conditions and information provided to the participants?
+- How were the results stored?
+
 ### Survey Analysis
+
+```{r load the CSV, echo=FALSE}
+# Load the data
+survey_data <- read.csv("data/survey_data_1_20.csv")
+survey_data
+
+```
+
+The survey data generated included 20 rows of respondant data.
+
+```{r}
+median_pl <- median(survey_data$Purchase.Likelihood)
+sd_pl <- sd(survey_data$Purchase.Likelihood)
+
+```
+
+The median purchase likelihood score was `r median_pl` with a standard deviation of `r sd_pl`.
 
 
 ### Appendix A - Survey Questions
 
-1. **How would you rate the overall game experience? (Numerical)**
-   - Scale: 1 (Poor) to 10 (Excellent)
+## Game Narrative
+1.  **How would you rate the overall game experience? (Numerical)**
+    -   Scale: 1 (Poor) to 10 (Excellent)
+2.  **How many hours do you play the game per week? (Numerical)**
+    -   Open numeric response
+3.  **What is your preferred game genre? (Categorical)**
+    -   Options: Action, Adventure, Puzzle, Strategy, Other
+4.  **On a scale of 1-10, how difficult do you find the game? (Numerical)**
+    -   Scale: 1 (Very Easy) to 10 (Very Hard)
 
-2. **How many hours do you play the game per week? (Numerical)**
-   - Open numeric response
+## Game Mechanics    
+    
+5.  **Have you experienced any bugs while playing the game? (Categorical)**
+    -   Options: Yes, No
+6.  **Which feature of the game do you like the most? (Categorical)**
+    -   Options: Graphics, Storyline, Gameplay Mechanics, Multiplayer Mode, Other
+7.  **Would you recommend this game to a friend? (Categorical)**
+    -   Options: Definitely, Probably, Not Sure, Probably Not, Definitely Not
+8.  **How likely are you to purchase in-game content? (Numerical)**
+    -   Scale: 0 (Not Likely) to 10 (Very Likely)
+    
+### Appendix B - Survey Data
 
-3. **What is your preferred game genre? (Categorical)**
-   - Options: Action, Adventure, Puzzle, Strategy, Other
+A [link](www.dkit.ie) to the survey is provided...
 
-4. **On a scale of 1-10, how difficult do you find the game? (Numerical)**
-   - Scale: 1 (Very Easy) to 10 (Very Hard)
 
-5. **Have you experienced any bugs while playing the game? (Categorical)**
-   - Options: Yes, No
-
-6. **Which feature of the game do you like the most? (Categorical)**
-   - Options: Graphics, Storyline, Gameplay Mechanics, Multiplayer Mode, Other
-
-7. **Would you recommend this game to a friend? (Categorical)**
-   - Options: Definitely, Probably, Not Sure, Probably Not, Definitely Not
-
-8. **How likely are you to purchase in-game content? (Numerical)**
-   - Scale: 0 (Not Likely) to 10 (Very Likely)
