@@ -46,6 +46,17 @@ hist(survey_data$Purchase.Likelihood,
      border = "black")
 ```
 
+Examining the data in more detail with a QQ plot it is clear that the data is not normally distributed.
+
+```{r}
+# Create a QQ plot
+qqnorm(survey_data$Purchase.Likelihood)
+qqline(survey_data$Purchase.Likelihood)
+
+```
+
+
+
 
 
 ### Appendix A - Survey Questions
