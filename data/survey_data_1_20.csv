@@ -1,0 +1,21 @@
+Respondent,Overall Experience,Hours/Week,Preferred Genre,Difficulty,Experienced Bugs,Favorite Feature,Recommend,Purchase Likelihood
+1,8,10,Adventure,7,Yes,Storyline,Definitely,5
+2,9,5,Action,5,No,Gameplay Mechanics,Definitely,8
+3,7,3,Puzzle,4,Yes,Graphics,Probably,2
+4,6,8,Strategy,6,No,Multiplayer Mode,Not Sure,4
+5,8,15,Action,9,Yes,Gameplay Mechanics,Definitely,6
+6,7,2,Adventure,3,No,Storyline,Probably,1
+7,5,1,Puzzle,2,Yes,Other,Probably Not,0
+8,9,20,Action,8,No,Graphics,Definitely,9
+9,8,4,Strategy,7,Yes,Multiplayer Mode,Probably,3
+10,6,5,Adventure,5,No,Storyline,Not Sure,2
+11,7,12,Action,6,Yes,Gameplay Mechanics,Probably,7
+12,8,6,Puzzle,4,No,Graphics,Definitely,5
+13,7,7,Strategy,5,Yes,Other,Probably,4
+14,9,9,Adventure,8,No,Storyline,Definitely,8
+15,5,10,Action,7,Yes,Multiplayer Mode,Probably Not,1
+16,8,11,Puzzle,3,No,Graphics,Definitely,6
+17,6,13,Strategy,6,Yes,Gameplay Mechanics,Not Sure,3
+18,7,14,Adventure,4,No,Storyline,Probably,2
+19,8,16,Action,5,Yes,Other,Definitely,7
+20,7,18,Strategy,6,No,Gameplay Mechanics,Probably Not,4

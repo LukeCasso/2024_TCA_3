@@ -1,0 +1,35 @@
+---
+title: "2024 - TCA - Survey - 1"
+author: "Niall McGuinness"
+format: pdf
+date: "2024-04-11"
+---
+
+### Survey Analysis
+
+
+### Appendix A - Survey Questions
+
+1. **How would you rate the overall game experience? (Numerical)**
+   - Scale: 1 (Poor) to 10 (Excellent)
+
+2. **How many hours do you play the game per week? (Numerical)**
+   - Open numeric response
+
+3. **What is your preferred game genre? (Categorical)**
+   - Options: Action, Adventure, Puzzle, Strategy, Other
+
+4. **On a scale of 1-10, how difficult do you find the game? (Numerical)**
+   - Scale: 1 (Very Easy) to 10 (Very Hard)
+
+5. **Have you experienced any bugs while playing the game? (Categorical)**
+   - Options: Yes, No
+
+6. **Which feature of the game do you like the most? (Categorical)**
+   - Options: Graphics, Storyline, Gameplay Mechanics, Multiplayer Mode, Other
+
+7. **Would you recommend this game to a friend? (Categorical)**
+   - Options: Definitely, Probably, Not Sure, Probably Not, Definitely Not
+
+8. **How likely are you to purchase in-game content? (Numerical)**
+   - Scale: 0 (Not Likely) to 10 (Very Likely)
