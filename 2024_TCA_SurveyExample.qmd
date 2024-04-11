@@ -28,13 +28,24 @@ survey_data
 
 The survey data generated included 20 rows of respondant data.
 
-```{r}
+```{r summary statistics, echo=FALSE}
 median_pl <- median(survey_data$Purchase.Likelihood)
 sd_pl <- sd(survey_data$Purchase.Likelihood)
 
 ```
 
-The median purchase likelihood score was `r median_pl` with a standard deviation of `r sd_pl`.
+The median purchase likelihood score was `r median_pl` with a standard deviation of `r round(sd_pl, 2)`.
+
+```{r}
+# Create a histogram of the puchase likelihood
+hist(survey_data$Purchase.Likelihood,
+     main = "Fig 1.0- Q1: Purchase Likelihood",
+     xlab = "Purchase Likelihood",
+     ylab = "# Respondants",
+     col = "lightblue",
+     border = "black")
+```
+
 
 
 ### Appendix A - Survey Questions
