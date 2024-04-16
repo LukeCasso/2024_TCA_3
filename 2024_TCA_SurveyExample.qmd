@@ -60,12 +60,7 @@ Let's conclude with linear regression to determine correlation between...
 ```{r}
 # Scatterplot
 plot(survey_data$Hours.Week, survey_data$Purchase.Likelihood)
-
 ```
-
-
-
-
 
 ### Appendix A - Survey Questions
 
