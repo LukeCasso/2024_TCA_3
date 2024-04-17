@@ -2,8 +2,10 @@
 title: "2024 - TCA - Survey - 1"
 author: "Niall McGuinness"
 format: html
-date: "2024-04-11"
+date: "`r format(Sys.Date(), '%B %d %Y')`"
 ---
+
+
 
 ### Overview
 - What survey was conducted?
@@ -17,16 +19,18 @@ date: "2024-04-11"
 - What were the pre-conditions and information provided to the participants?
 - How were the results stored?
 
-### Survey Analysis
+## Survey Analysis
+
+The survey data generated included 20 rows of respondant data.
 
 ```{r load the CSV, echo=FALSE}
 # Load the data
 survey_data <- read.csv("data/survey_data_1_20.csv")
-survey_data
-
 ```
 
-The survey data generated included 20 rows of respondant data.
+### Descriptive Statistics
+
+This section provides basic descriptive statistics for the collected data. It includes measures of central tendency and variability.
 
 ```{r summary statistics, echo=FALSE}
 median_pl <- median(survey_data$Purchase.Likelihood)
@@ -46,6 +50,8 @@ hist(survey_data$Purchase.Likelihood,
      border = "black")
 ```
 
+### Tests for Normality
+
 Examining the data in more detail with a QQ plot it is clear that the data is not normally distributed.
 
 ```{r}
@@ -55,11 +61,16 @@ qqline(survey_data$Purchase.Likelihood)
 
 ```
 
-Let's conclude with linear regression to determine correlation between...
+### Correlation Analysis
+
+This section investigates the relationships between two paired numerical variables. We will use Pearson's correlation coefficient to assess the strength of the relationship.
+
+Let use linear regression to determine correlation between X and Y.
 
 ```{r}
 # Scatterplot
 plot(survey_data$Hours.Week, survey_data$Purchase.Likelihood)
+
 ```
 
 ### Appendix A - Survey Questions
@@ -88,5 +99,3 @@ plot(survey_data$Hours.Week, survey_data$Purchase.Likelihood)
 ### Appendix B - Survey Data
 
 A [link](www.dkit.ie) to the survey is provided...
-
-
