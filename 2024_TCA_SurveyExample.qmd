@@ -123,7 +123,6 @@ survey_data$Feature.Like <- as.numeric(factor(survey_data$Feature.Like))
 table(survey_data$Game.Genre, survey_data$Bugs, survey_data$Feature.Like)
 
 # print a pretty version of the table
-library(knitr)
 kable(table(survey_data$Game.Genre, survey_data$Bugs, survey_data$Feature.Like))
 
 
