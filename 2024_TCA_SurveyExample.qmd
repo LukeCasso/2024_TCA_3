@@ -5,6 +5,12 @@ format: html
 date: "`r format(Sys.Date(), '%B %d %Y')`"
 ---
 
+```{r}
+# install knitr for a pretty table - see Appencix C
+if(!require("knitr"))
+   install.packages("knitr")
+library(knitr)
+```
 
 
 ### Overview
@@ -59,13 +65,18 @@ Examining the data in more detail with a QQ plot it is clear that the data is no
 qqnorm(survey_data$Purchase.Likelihood)
 qqline(survey_data$Purchase.Likelihood)
 
+# Determine normality from shapiro test
+results_sw <- shapiro.test(survey_data$Purchase.Likelihood)
+p_value <- result_sw$p.value
+is_normal <- p_value > 0.05
 ```
+
+A `r result_sw$method` was conducted on the Purchase Likelihood data. From the output obtained we `r if(is_normal){"can"}else{"cannot"}` assume normality and **accept the null hypothesis** as the p-value (p=`r round(p_value, 3)`) is `r if(is_normal){"greater"}else{"less"}` than 0.05.
+
 
 ### Correlation Analysis
 
-This section investigates the relationships between two paired numerical variables. We will use Pearson's correlation coefficient to assess the strength of the relationship.
-
-Let use linear regression to determine correlation between X and Y.
+This section investigates the relationships between two paired numerical variables. Both numerical variables were examined for normality (see previous section) and are considered normal. We may therefore use Pearson's correlation coefficient to assess the strength of the relationship between these variables.
 
 ```{r}
 # Scatterplot
@@ -99,3 +110,23 @@ plot(survey_data$Hours.Week, survey_data$Purchase.Likelihood)
 ### Appendix B - Survey Data
 
 A [link](www.dkit.ie) to the survey is provided...
+
+### Appendix C - Converting categorical to numerical data
+
+```{r}
+# Convert categorical data to numerical
+survey_data$Game.Genre <- as.numeric(factor(survey_data$Game.Genre))
+survey_data$Bugs <- as.numeric(factor(survey_data$Bugs))
+survey_data$Feature.Like <- as.numeric(factor(survey_data$Feature.Like))
+
+# make a table from these three new numerical variables
+table(survey_data$Game.Genre, survey_data$Bugs, survey_data$Feature.Like)
+
+# print a pretty version of the table
+library(knitr)
+kable(table(survey_data$Game.Genre, survey_data$Bugs, survey_data$Feature.Like))
+
+
+```
+
+
