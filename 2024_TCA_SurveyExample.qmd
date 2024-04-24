@@ -3,17 +3,26 @@ title: "2024 - TCA - Survey - 1"
 author: "Niall McGuinness"
 format: html
 date: "`r format(Sys.Date(), '%B %d %Y')`"
+toc: true
+execute:
+  echo: false
+  warning: false
 ---
 
-```{r}
-# install knitr for a pretty table - see Appencix C
+```{r setup}
+# install knitr for a pretty table - see Appendix C
 if(!require("knitr"))
    install.packages("knitr")
 library(knitr)
+
+# install kableExtra for a pretty table - see Appendix D
+if(!require("kableExtra"))
+   install.packages("kableExtra")
+library(kableExtra)
 ```
 
 
-### Overview
+## Overview
 - What survey was conducted?
 - When and with whom was it conducted? (date, N (M, F, O))
 - How do the participants breakdown in terms of demographic?
@@ -27,18 +36,23 @@ library(knitr)
 
 ## Survey Analysis
 
-The survey data generated included 20 rows of respondant data.
-
-```{r load the CSV, echo=FALSE}
+```{r load the CSV}
 # Load the data
 survey_data <- read.csv("data/survey_data_1_20.csv")
 ```
+The data (N=`r nrow(survey_data)`) was collected from a convenience sample of participants who were asked to complete the survey online. The purpose of the survey was to gather information on a number of categories relating to game mechanic, playabilty, and in-game content. 
 
-### Descriptive Statistics
+The results were gathered using an online survey tool and the data was stored in a CSV file.
+
+## Descriptive Statistics
 
 This section provides basic descriptive statistics for the collected data. It includes measures of central tendency and variability.
 
-```{r summary statistics, echo=FALSE}
+### Purchase Likelihood
+
+The Purchase Likelihood data was collected on a scale of 0 (Not Likely) to 10 (Very Likely). The data was analyzed to determine the median and standard deviation.
+
+```{r summary statistics}
 median_pl <- median(survey_data$Purchase.Likelihood)
 sd_pl <- sd(survey_data$Purchase.Likelihood)
 
@@ -46,47 +60,143 @@ sd_pl <- sd(survey_data$Purchase.Likelihood)
 
 The median purchase likelihood score was `r median_pl` with a standard deviation of `r round(sd_pl, 2)`.
 
-```{r}
+```{r histogram likelihood}
 # Create a histogram of the puchase likelihood
 hist(survey_data$Purchase.Likelihood,
-     main = "Fig 1.0- Q1: Purchase Likelihood",
+     main = "Fig 1.0 - Q1: Purchase Likelihood",
      xlab = "Purchase Likelihood",
      ylab = "# Respondants",
      col = "lightblue",
-     border = "black")
+     border = "darkblue",
+     breaks = 6)
+
 ```
 
-### Tests for Normality
+The histogram in Fig 1.0 shows the distribution of purchase likelihood scores. The data appears to be right-skewed and unimodal.
 
-Examining the data in more detail with a QQ plot it is clear that the data is not normally distributed.
+```{r boxplot likelihood}
+# boxplot of purchase likelihood
+boxplot(survey_data$Purchase.Likelihood ~ survey_data$Preferred.Genre,
+        survey_data,
+        na.action = na.omit,
+        col = "lightblue",
+        outline = TRUE,
+        border = "darkblue",
+        horizontal = FALSE,
+        main = "Fig 2.0 - Q1: Purchase Likelihood by Genre",
+        xlab = "Preferred Genre",
+        ylab = "Purchase Likelihood")
 
-```{r}
-# Create a QQ plot
-qqnorm(survey_data$Purchase.Likelihood)
+
+# set how many ticks to put on Y axis
+# see Axis Customization - https://r-charts.com/base-r/axes/?utm_content=cmp-true
+axis(2, at = c(seq(0, 10, 1)))
+
+```
+
+The boxplot in Fig 2.0 shows the purchase likelihood by preferred genre. The data is spread across the genres, with some outliers in the Action genre.
+
+## Tests for Normality
+
+The Purchase Likelihood data was tested for normality using a QQ plot and a Shapiro-Wilk test.
+
+```{r normality test}
+
+# Create a QQ plot of purchase likelihood with a title
+qqnorm(survey_data$Purchase.Likelihood,
+       main = "Fig 3.0 - Q1: Purchase Likelihood QQ Plot")
 qqline(survey_data$Purchase.Likelihood)
 
+
+```
+
+The QQ Plot in Fig 3.0  shows that the data is normally distributed. To confirm this, a Shapiro-Wilk test was conducted.
+
+```{r shapiro test}
 # Determine normality from shapiro test
 results_sw <- shapiro.test(survey_data$Purchase.Likelihood)
-p_value <- result_sw$p.value
+p_value <- results_sw$p.value
 is_normal <- p_value > 0.05
 ```
 
-A `r result_sw$method` was conducted on the Purchase Likelihood data. From the output obtained we `r if(is_normal){"can"}else{"cannot"}` assume normality and **accept the null hypothesis** as the p-value (p=`r round(p_value, 3)`) is `r if(is_normal){"greater"}else{"less"}` than 0.05.
+A `r results_sw$method` was conducted on the Purchase Likelihood data. From the output obtained we `r if(is_normal){"can"}else{"cannot"}` assume normality and **accept the null hypothesis** as the p-value (p=`r round(p_value, 3)`) is `r if(is_normal){"greater"}else{"less"}` than 0.05.
 
 
-### Correlation Analysis
+## Correlation Analysis
 
-This section investigates the relationships between two paired numerical variables. Both numerical variables were examined for normality (see previous section) and are considered normal. We may therefore use Pearson's correlation coefficient to assess the strength of the relationship between these variables.
+### Hours per week vs Purchase Likelihood (Numerical)
 
-```{r}
+This section investigates the relationships between two paired numerical variables. Both numerical variables were examined for normality (see previous section) and are considered normal. We may therefore use Pearson's correlation coefficient to assess the strength of the relationship between these numerical variables.
+
+```{r correlation analysis}
 # Scatterplot
-plot(survey_data$Hours.Week, survey_data$Purchase.Likelihood)
+plot(survey_data$Hours.Week, survey_data$Purchase.Likelihood,
+     main = "Fig 3.0 - Q2: Hours per Week vs Purchase Likelihood",
+     xlab = "Hours per Week",
+     ylab = "Purchase Likelihood")
 
 ```
 
-### Appendix A - Survey Questions
+The scatterplot above shows the relationship between the number of hours played per week and the likelihood of purchasing in-game content. The data points are spread across the plot, indicating a potential relationship between the two variables.
 
-## Game Narrative
+```{r pearson correlation test}
+# linear correlation num_genre vs num_recommend using spearman
+cor_results <- cor.test(survey_data$Hours.Week, survey_data$Purchase.Likelihood, method = "pearson")
+```
+
+```{r correlation output 1}
+# output results for linear correlation
+cor_results
+```
+
+A correlation test between the number of hours played per week and the likelihood of purchasing in-game content was conducted. The results of the correlation test indicate a `r if(cor_results$p.value < 0.05){"significant"}else{"non-significant"}` relationship between the number of hours played per week and the likelihood of purchasing in-game content. The estimated correlation is `r round(cor_results$estimate,2)`.
+
+### Recommend vs Genre (Categorical) 
+
+In this section, we will examine the relationship between the preferred game genre and the likelihood of recommending the game to a friend. We will convert the categorical data to numerical data and then calculate the correlation between the two variables. Both numerical variables were examined for normality and are considered normal. We may therefore use Spearman's correlation coefficient to assess the strength of the relationship between these categorical variables.
+
+```{r categorical to numerical}
+
+# Converting categorical to numerical data
+num_recommend <- as.numeric(
+  factor(survey_data$Recommend,
+         levels = c("Definitely", "Probably", "Not Sure", "Probably Not", "Definitely Not"),
+         exclude = NA))
+
+num_genre <- as.numeric(
+  factor(survey_data$Preferred.Genre,
+         levels = c("Action", "Adventure", "Puzzle", "Strategy", "Other"),
+         exclude = NA))
+```
+
+```{r scatterplot}
+# plot linear correlation num_genre vs num_recommend
+plot(num_genre, num_recommend,
+     main = "Fig 4.0 - Q3: Genre vs Recommend",
+     xlab = "Preferred Genre",
+     ylab = "Recommend")
+```
+
+The scatterplot above shows the relationship between the preferred game genre and the likelihood of recommending the game to a friend. The data points are spread across the plot, indicating a potential relationship between the two variables.
+
+```{r spearman correlation test}
+# linear correlation num_genre vs num_recommend using spearman
+cor_results <- cor.test(num_genre, num_recommend,
+                        method = "spearman")
+```
+
+```{r correlation output 2}
+# output results for linear correlation
+cor_results
+
+```
+
+A correlation test between the preferred genre and the likelihood of recommending the game to a friend was conducted. The results of the correlation test indicate a `r if(cor_results$p.value < 0.05){"significant"}else{"non-significant"}` relationship between the preferred genre and the likelihood of recommending the game to a friend. The estimated correlation is `r round(cor_results$estimate,2)`.
+
+
+## Appendix A - Survey Questions
+
+### Category - Game Narrative
 1.  **How would you rate the overall game experience? (Numerical)**
     -   Scale: 1 (Poor) to 10 (Excellent)
 2.  **How many hours do you play the game per week? (Numerical)**
@@ -96,36 +206,78 @@ plot(survey_data$Hours.Week, survey_data$Purchase.Likelihood)
 4.  **On a scale of 1-10, how difficult do you find the game? (Numerical)**
     -   Scale: 1 (Very Easy) to 10 (Very Hard)
 
-## Game Mechanics    
+### Category - Game Mechanics    
     
-5.  **Have you experienced any bugs while playing the game? (Categorical)**
+1.  **Have you experienced any bugs while playing the game? (Categorical)**
     -   Options: Yes, No
-6.  **Which feature of the game do you like the most? (Categorical)**
+2.  **Which feature of the game do you like the most? (Categorical)**
     -   Options: Graphics, Storyline, Gameplay Mechanics, Multiplayer Mode, Other
-7.  **Would you recommend this game to a friend? (Categorical)**
+3.  **Would you recommend this game to a friend? (Categorical)**
     -   Options: Definitely, Probably, Not Sure, Probably Not, Definitely Not
-8.  **How likely are you to purchase in-game content? (Numerical)**
+4.  **How likely are you to purchase in-game content? (Numerical)**
     -   Scale: 0 (Not Likely) to 10 (Very Likely)
     
-### Appendix B - Survey Data
+## Appendix B - Tables
 
-A [link](www.dkit.ie) to the survey is provided...
+### Categorical to Numerical 
 
-### Appendix C - Converting categorical to numerical data
+Table 1.0 below shows the results of converting the categorical data to numerical data for the preferred game genre and the likelihood of recommending the game to a friend.
 
-```{r}
-# Convert categorical data to numerical
-survey_data$Game.Genre <- as.numeric(factor(survey_data$Game.Genre))
-survey_data$Bugs <- as.numeric(factor(survey_data$Bugs))
-survey_data$Feature.Like <- as.numeric(factor(survey_data$Feature.Like))
+```{r table and plot, echo=FALSE}
+table_cat_to_num <- data.frame(num_recommend, num_genre)
 
-# make a table from these three new numerical variables
-table(survey_data$Game.Genre, survey_data$Bugs, survey_data$Feature.Like)
+kable(table_cat_to_num, caption = "Table 1.0 - Categorical to Numerical Conversion",
+      col.names = c("Recommend", "Genre"))
+```
 
-# print a pretty version of the table
-kable(table(survey_data$Game.Genre, survey_data$Bugs, survey_data$Feature.Like))
+## Appendix C - Survey Data
 
+Table 2.0 below shows the raw survey data collected from the participants.
+
+```{r survey data, echo=FALSE}
+
+kable(survey_data, 
+      caption = "Table 2.0 - Raw Survey Data")
 
 ```
 
+## Appendix D - More Illustrative Tables
 
+We can use the `kableExtra` package to create more elaborate tables - see
+[CRAN](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) and [rfortherestofus](https://rfortherestofus.com/2019/11/how-to-make-beautiful-tables-in-r) for more information.
+
+We can add color to the table using the `column_spec` function. The `spec_color` function can be used to specify the color based on the values in the column. The `spec_color` function can also be used to create a link to a website. The `spec_color` function can also be used to create a popover with additional information.
+
+``` {r kableExtra color}  
+mtcars[1:8, 1:8] %>%
+  kbl() %>%
+  kable_paper(full_width = F) %>%
+  column_spec(2, color = spec_color(mtcars$mpg[1:8]),
+              link = "https://haozhu233.github.io/kableExtra/") %>%
+  column_spec(6, color = "white",
+              background = spec_color(mtcars$drat[1:8], end = 0.7),
+              popover = paste("am:", mtcars$am[1:8]))
+```
+
+Finally, we can also replace numeric variables with plots in the table using `kableExtra`. The `spec_plot` function can be used to specify the plot type (boxplot, histogram, scatterplot, etc.) and the data to be plotted. The `spec_plot` function can also be used to specify the type of plot (line, point, polygon, etc.) and the data to be plotted.
+
+
+```{r kableExtra}  
+
+mpg_list <- split(mtcars$mpg, mtcars$cyl)
+disp_list <- split(mtcars$disp, mtcars$cyl)
+inline_plot <- data.frame(cyl = c(4, 6, 8), mpg_box = "", mpg_hist = "",
+                          mpg_line1 = "", mpg_line2 = "",
+                          mpg_points1 = "", mpg_points2 = "", mpg_poly = "")
+inline_plot %>%
+  kbl(booktabs = TRUE) %>%
+  kable_paper(full_width = FALSE) %>%
+  column_spec(2, image = spec_boxplot(mpg_list)) %>%
+  column_spec(3, image = spec_hist(mpg_list)) %>%
+  column_spec(4, image = spec_plot(mpg_list, same_lim = TRUE)) %>%
+  column_spec(5, image = spec_plot(mpg_list, same_lim = FALSE)) %>%
+  column_spec(6, image = spec_plot(mpg_list, type = "p")) %>%
+  column_spec(7, image = spec_plot(mpg_list, disp_list, type = "p")) %>%
+  column_spec(8, image = spec_plot(mpg_list, polymin = 5))
+
+```

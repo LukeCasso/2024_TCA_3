@@ -52,46 +52,6 @@
   \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
 
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{241,243,245}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
-\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
-\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
-\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
-\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
-\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
@@ -118,6 +78,20 @@
 \def\fps@figure{htbp}
 \makeatother
 
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 \KOMAoption{captions}{tableheading}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
@@ -179,12 +153,18 @@
 
 \title{2024 - TCA - Survey - 1}
 \author{Niall McGuinness}
-\date{2024-04-11}
+\date{2024-04-24}
 
 \begin{document}
 \maketitle
 
-\subsubsection{Overview}\label{overview}
+\renewcommand*\contentsname{Table of contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\subsection{Overview}\label{overview}
 
 \begin{itemize}
 \tightlist
@@ -211,65 +191,135 @@
   How were the results stored?
 \end{itemize}
 
-\subsubsection{Survey Analysis}\label{survey-analysis}
+\subsection{Survey Analysis}\label{survey-analysis}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Load the data}
-\NormalTok{survey\_data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/survey\_data\_1\_20.csv"}\NormalTok{)}
-\NormalTok{survey\_data}
-\end{Highlighting}
-\end{Shaded}
+The data (N=20) was collected from a convenience sample of participants
+who were asked to complete the survey online. The purpose of the survey
+was to gather information on a number of categories relating to game
+mechanic, playabilty, and in-game content.
+
+The results were gathered using an online survey tool and the data was
+stored in a CSV file.
+
+\subsection{Descriptive Statistics}\label{descriptive-statistics}
+
+This section provides basic descriptive statistics for the collected
+data. It includes measures of central tendency and variability.
+
+\subsubsection{Purchase Likelihood}\label{purchase-likelihood}
+
+The Purchase Likelihood data was collected on a scale of 0 (Not Likely)
+to 10 (Very Likely). The data was analyzed to determine the median and
+standard deviation.
+
+The median purchase likelihood score was 4 with a standard deviation of
+2.62.
+
+\includegraphics{2024_TCA_SurveyExample_files/figure-pdf/histogram likelihood-1.pdf}
+
+The histogram in Fig 1.0 shows the distribution of purchase likelihood
+scores. The data appears to be right-skewed and unimodal.
+
+\includegraphics{2024_TCA_SurveyExample_files/figure-pdf/boxplot likelihood-1.pdf}
+
+The boxplot in Fig 2.0 shows the purchase likelihood by preferred genre.
+The data is spread across the genres, with some outliers in the Action
+genre.
+
+\subsection{Tests for Normality}\label{tests-for-normality}
+
+The Purchase Likelihood data was tested for normality using a QQ plot
+and a Shapiro-Wilk test.
+
+\includegraphics{2024_TCA_SurveyExample_files/figure-pdf/normality test-1.pdf}
+
+The QQ Plot in Fig 3.0 shows that the data is normally distributed. To
+confirm this, a Shapiro-Wilk test was conducted.
+
+A Shapiro-Wilk normality test was conducted on the Purchase Likelihood
+data. From the output obtained we can assume normality and
+\textbf{accept the null hypothesis} as the p-value (p=0.598) is greater
+than 0.05.
+
+\subsection{Correlation Analysis}\label{correlation-analysis}
+
+\subsubsection{Hours per week vs Purchase Likelihood
+(Numerical)}\label{hours-per-week-vs-purchase-likelihood-numerical}
+
+This section investigates the relationships between two paired numerical
+variables. Both numerical variables were examined for normality (see
+previous section) and are considered normal. We may therefore use
+Pearson's correlation coefficient to assess the strength of the
+relationship between these numerical variables.
+
+\includegraphics{2024_TCA_SurveyExample_files/figure-pdf/correlation analysis-1.pdf}
+
+The scatterplot above shows the relationship between the number of hours
+played per week and the likelihood of purchasing in-game content. The
+data points are spread across the plot, indicating a potential
+relationship between the two variables.
 
 \begin{verbatim}
-   Respondent Overall.Experience Hours.Week Preferred.Genre Difficulty
-1           1                  8         10       Adventure          7
-2           2                  9          5          Action          5
-3           3                  7          3          Puzzle          4
-4           4                  6          8        Strategy          6
-5           5                  8         15          Action          9
-6           6                  7          2       Adventure          3
-7           7                  5          1          Puzzle          2
-8           8                  9         20          Action          8
-9           9                  8          4        Strategy          7
-10         10                  6          5       Adventure          5
-11         11                  7         12          Action          6
-12         12                  8          6          Puzzle          4
-13         13                  7          7        Strategy          5
-14         14                  9          9       Adventure          8
-15         15                  5         10          Action          7
-16         16                  8         11          Puzzle          3
-17         17                  6         13        Strategy          6
-18         18                  7         14       Adventure          4
-19         19                  8         16          Action          5
-20         20                  7         18        Strategy          6
-   Experienced.Bugs   Favorite.Feature    Recommend Purchase.Likelihood
-1               Yes          Storyline   Definitely                   5
-2                No Gameplay Mechanics   Definitely                   8
-3               Yes           Graphics     Probably                   2
-4                No   Multiplayer Mode     Not Sure                   4
-5               Yes Gameplay Mechanics   Definitely                   6
-6                No          Storyline     Probably                   1
-7               Yes              Other Probably Not                   0
-8                No           Graphics   Definitely                   9
-9               Yes   Multiplayer Mode     Probably                   3
-10               No          Storyline     Not Sure                   2
-11              Yes Gameplay Mechanics     Probably                   7
-12               No           Graphics   Definitely                   5
-13              Yes              Other     Probably                   4
-14               No          Storyline   Definitely                   8
-15              Yes   Multiplayer Mode Probably Not                   1
-16               No           Graphics   Definitely                   6
-17              Yes Gameplay Mechanics     Not Sure                   3
-18               No          Storyline     Probably                   2
-19              Yes              Other   Definitely                   7
-20               No Gameplay Mechanics Probably Not                   4
+
+    Pearson's product-moment correlation
+
+data:  survey_data$Hours.Week and survey_data$Purchase.Likelihood
+t = 2.5925, df = 18, p-value = 0.01839
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.1025556 0.7832173
+sample estimates:
+      cor 
+0.5214131 
 \end{verbatim}
 
-\subsubsection{Appendix A - Survey
+A correlation test between the number of hours played per week and the
+likelihood of purchasing in-game content was conducted. The results of
+the correlation test indicate a significant relationship between the
+number of hours played per week and the likelihood of purchasing in-game
+content. The estimated correlation is 0.52.
+
+\subsubsection{Recommend vs Genre
+(Categorical)}\label{recommend-vs-genre-categorical}
+
+In this section, we will examine the relationship between the preferred
+game genre and the likelihood of recommending the game to a friend. We
+will convert the categorical data to numerical data and then calculate
+the correlation between the two variables. Both numerical variables were
+examined for normality and are considered normal. We may therefore use
+Spearman's correlation coefficient to assess the strength of the
+relationship between these categorical variables.
+
+\includegraphics{2024_TCA_SurveyExample_files/figure-pdf/scatterplot-1.pdf}
+
+The scatterplot above shows the relationship between the preferred game
+genre and the likelihood of recommending the game to a friend. The data
+points are spread across the plot, indicating a potential relationship
+between the two variables.
+
+\begin{verbatim}
+
+    Spearman's rank correlation rho
+
+data:  num_genre and num_recommend
+S = 760.54, p-value = 0.05965
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.4281676 
+\end{verbatim}
+
+A correlation test between the preferred genre and the likelihood of
+recommending the game to a friend was conducted. The results of the
+correlation test indicate a non-significant relationship between the
+preferred genre and the likelihood of recommending the game to a friend.
+The estimated correlation is 0.43.
+
+\subsection{Appendix A - Survey
 Questions}\label{appendix-a---survey-questions}
 
-\subsection{Game Narrative}\label{game-narrative}
+\subsubsection{Category - Game
+Narrative}\label{category---game-narrative}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -309,11 +359,11 @@ Questions}\label{appendix-a---survey-questions}
   \end{itemize}
 \end{enumerate}
 
-\subsection{Game Mechanics}\label{game-mechanics}
+\subsubsection{Category - Game
+Mechanics}\label{category---game-mechanics}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{4}
 \tightlist
 \item
   \textbf{Have you experienced any bugs while playing the game?
@@ -352,9 +402,175 @@ Questions}\label{appendix-a---survey-questions}
   \end{itemize}
 \end{enumerate}
 
-\subsubsection{Appendix B - Survey Data}\label{appendix-b---survey-data}
+\subsection{Appendix B - Tables}\label{appendix-b---tables}
 
-A \href{www.dkit.ie}{link} to the survey is provided\ldots{}
+\subsubsection{Categorical to Numerical}\label{categorical-to-numerical}
+
+Table 1.0 below shows the results of converting the categorical data to
+numerical data for the preferred game genre and the likelihood of
+recommending the game to a friend.
+
+\begin{table}
+
+\caption{\label{tab:table and plot}Table 1.0 - Categorical to Numerical Conversion}
+\centering
+\begin{tabular}[t]{r|r}
+\hline
+Recommend & Genre\\
+\hline
+1 & 2\\
+\hline
+1 & 1\\
+\hline
+2 & 3\\
+\hline
+3 & 4\\
+\hline
+1 & 1\\
+\hline
+2 & 2\\
+\hline
+4 & 3\\
+\hline
+1 & 1\\
+\hline
+2 & 4\\
+\hline
+3 & 2\\
+\hline
+2 & 1\\
+\hline
+1 & 3\\
+\hline
+2 & 4\\
+\hline
+1 & 2\\
+\hline
+4 & 1\\
+\hline
+1 & 3\\
+\hline
+3 & 4\\
+\hline
+2 & 2\\
+\hline
+1 & 1\\
+\hline
+4 & 4\\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Appendix C - Survey Data}\label{appendix-c---survey-data}
+
+Table 2.0 below shows the raw survey data collected from the
+participants.
+
+\begin{table}
+
+\caption{\label{tab:survey data}Table 2.0 - Raw Survey Data}
+\centering
+\begin{tabular}[t]{r|r|r|l|r|l|l|l|r}
+\hline
+Respondent & Overall.Experience & Hours.Week & Preferred.Genre & Difficulty & Experienced.Bugs & Favorite.Feature & Recommend & Purchase.Likelihood\\
+\hline
+1 & 8 & 10 & Adventure & 7 & Yes & Storyline & Definitely & 5\\
+\hline
+2 & 9 & 5 & Action & 5 & No & Gameplay Mechanics & Definitely & 8\\
+\hline
+3 & 7 & 3 & Puzzle & 4 & Yes & Graphics & Probably & 2\\
+\hline
+4 & 6 & 8 & Strategy & 6 & No & Multiplayer Mode & Not Sure & 4\\
+\hline
+5 & 8 & 15 & Action & 9 & Yes & Gameplay Mechanics & Definitely & 6\\
+\hline
+6 & 7 & 2 & Adventure & 3 & No & Storyline & Probably & 1\\
+\hline
+7 & 5 & 1 & Puzzle & 2 & Yes & Other & Probably Not & 0\\
+\hline
+8 & 9 & 20 & Action & 8 & No & Graphics & Definitely & 9\\
+\hline
+9 & 8 & 4 & Strategy & 7 & Yes & Multiplayer Mode & Probably & 3\\
+\hline
+10 & 6 & 5 & Adventure & 5 & No & Storyline & Not Sure & 2\\
+\hline
+11 & 7 & 12 & Action & 6 & Yes & Gameplay Mechanics & Probably & 7\\
+\hline
+12 & 8 & 6 & Puzzle & 4 & No & Graphics & Definitely & 5\\
+\hline
+13 & 7 & 7 & Strategy & 5 & Yes & Other & Probably & 4\\
+\hline
+14 & 9 & 9 & Adventure & 8 & No & Storyline & Definitely & 8\\
+\hline
+15 & 5 & 10 & Action & 7 & Yes & Multiplayer Mode & Probably Not & 1\\
+\hline
+16 & 8 & 11 & Puzzle & 3 & No & Graphics & Definitely & 6\\
+\hline
+17 & 6 & 13 & Strategy & 6 & Yes & Gameplay Mechanics & Not Sure & 3\\
+\hline
+18 & 7 & 14 & Adventure & 4 & No & Storyline & Probably & 2\\
+\hline
+19 & 8 & 16 & Action & 5 & Yes & Other & Definitely & 7\\
+\hline
+20 & 7 & 18 & Strategy & 6 & No & Gameplay Mechanics & Probably Not & 4\\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Appendix D - More Illustrative
+Tables}\label{appendix-d---more-illustrative-tables}
+
+We can use the \texttt{kableExtra} package to create more elaborate
+tables - see
+\href{https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html}{CRAN}
+and
+\href{https://rfortherestofus.com/2019/11/how-to-make-beautiful-tables-in-r}{rfortherestofus}
+for more information.
+
+\begin{table}
+\centering
+\begin{tabular}[t]{r>{}l>{}l>{}l>{}l>{}l>{}l>{}l}
+\toprule
+cyl & mpg\_box & mpg\_hist & mpg\_line1 & mpg\_line2 & mpg\_points1 & mpg\_points2 & mpg\_poly\\
+\midrule
+4 & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/boxplot_680c712f1839.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/hist_680c201c5835.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680c6af95b70.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680c24814ad.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680c7b9e331d.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680c7b66326b.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680c5b583a0d.pdf}\\
+6 & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/boxplot_680c7508672a.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/hist_680c6e444024.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680c5b7259aa.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680cc2aae3.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680c4f49e25.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680c31ad34cc.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680c212f6e39.pdf}\\
+8 & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/boxplot_680c1371695.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/hist_680c4088255a.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680c7c286335.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680c746456dc.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680c2fe83e3c.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680c27742204.pdf} & \includegraphics[width=0.67in, height=0.17in]{D:/Work/2023-24/Semester 2/3DGD/Repos/2024_TCA_SurveyExample/2024_TCA_SurveyExample_files/figure-latex/plot_680c17995073.pdf}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We can also add color to the table using the \texttt{column\_spec}
+function. The \texttt{spec\_color} function can be used to specify the
+color based on the values in the column. The \texttt{spec\_color}
+function can also be used to create a link to a website. The
+\texttt{spec\_color} function can also be used to create a popover with
+additional information.
+
+\begin{table}
+\centering
+\begin{tabular}[t]{l|>{}r|r|r|r|>{}r|r|r|r}
+\hline
+  & mpg & cyl & disp & hp & drat & wt & qsec & vs\\
+\hline
+Mazda RX4 & \href{https://haozhu233.github.io/kableExtra/}{\textcolor[HTML]{34B679}{21.0}} & 6 & 160.0 & 110 & \cellcolor[HTML]{43BF71}{\textcolor{white}{3.90}} & 2.620 & 16.46 & 0\\
+\hline
+Mazda RX4 Wag & \href{https://haozhu233.github.io/kableExtra/}{\textcolor[HTML]{34B679}{21.0}} & 6 & 160.0 & 110 & \cellcolor[HTML]{43BF71}{\textcolor{white}{3.90}} & 2.875 & 17.02 & 0\\
+\hline
+Datsun 710 & \href{https://haozhu233.github.io/kableExtra/}{\textcolor[HTML]{95D840}{22.8}} & 4 & 108.0 & 93 & \cellcolor[HTML]{37B878}{\textcolor{white}{3.85}} & 2.320 & 18.61 & 1\\
+\hline
+Hornet 4 Drive & \href{https://haozhu233.github.io/kableExtra/}{\textcolor[HTML]{44BF70}{21.4}} & 6 & 258.0 & 110 & \cellcolor[HTML]{414387}{\textcolor{white}{3.08}} & 3.215 & 19.44 & 1\\
+\hline
+Hornet Sportabout & \href{https://haozhu233.github.io/kableExtra/}{\textcolor[HTML]{26818E}{18.7}} & 8 & 360.0 & 175 & \cellcolor[HTML]{3C4F8A}{\textcolor{white}{3.15}} & 3.440 & 17.02 & 0\\
+\hline
+Valiant & \href{https://haozhu233.github.io/kableExtra/}{\textcolor[HTML]{2C728E}{18.1}} & 6 & 225.0 & 105 & \cellcolor[HTML]{440154}{\textcolor{white}{2.76}} & 3.460 & 20.22 & 1\\
+\hline
+Duster 360 & \href{https://haozhu233.github.io/kableExtra/}{\textcolor[HTML]{440154}{14.3}} & 8 & 360.0 & 245 & \cellcolor[HTML]{375A8C}{\textcolor{white}{3.21}} & 3.570 & 15.84 & 0\\
+\hline
+Merc 240D & \href{https://haozhu233.github.io/kableExtra/}{\textcolor[HTML]{FDE725}{24.4}} & 4 & 146.7 & 62 & \cellcolor[HTML]{1FA187}{\textcolor{white}{3.69}} & 3.190 & 20.00 & 1\\
+\hline
+\end{tabular}
+\end{table}
 
 
 
