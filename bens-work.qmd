@@ -1,0 +1,87 @@
+---
+title: "TCA-3 Survey"
+author: "Ben McQuaile, Dylan Dockery, Luke Cassidy, Emily McCormack"
+format: pdf
+---
+
+## Overview
+
+This is our document detailing the work conducted by our team, VisionWeavers in surveying participants who agreed to take part in testing our game Shades of Solitude.
+
+## Survey Construction
+
+### Categories
+
+#### Demographics
+
+-   **What Gender do you identify as?**
+
+    -   Male
+    -   Female
+    -   Other
+
+-   **What is your Age Group?**
+
+    -   18-24
+    -   25-34
+    -   35-44
+    -   45-54
+    -   55-64
+    -   65+
+
+-   **How many hours would you play in games in a given week?**
+
+    -   1-5 Hours
+    -   6-15 Hours
+    -   16-30 Hours
+    -   31-50 Hours
+    -   51+ Hours
+
+#### Mechanics
+
+-   **How intuitive did you find the player controls?**
+    -   Very intuitive
+    -   Somewhat intuitive
+    -   Neutral
+    -   Somewhat unintuitive
+    -   Very unintuitive
+-   **Did you experience any difficulties with the player's controls?**
+    -   Yes (Please Specify)
+    -   No
+-   **How challenging did you find the puzzles in the game?**
+    -   Too Easy
+    -   Just Right
+    -   Neutral
+    -   Very Difficult
+    -   Frustratingly Difficult
+-   **Was there a particular puzzle that you felt was too difficult or too easy?**
+    -   Too Easy (Please Describe)
+    -   Too Difficult (Please Describe)
+    -   No
+
+#### Narrative
+
+#### Visuals
+
+#### Audio
+
+### Survey Analysis
+
+The data (N=`r nrow(survey_data)`) was collected from a convenience sample of participants who were asked to complete the survey online. The purpose of the survey was to gather information on a number of categories relating to game mechanics, visuals, audio and narrative.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
