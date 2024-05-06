@@ -104,9 +104,9 @@ The boxplot in Fig 2.0 shows the Recommendation Likelihood by Atmosphere. This m
 
 Outlier tells us that the atmosphere was interesting but it might not be something they are massively interested in.
 
-## Tests for Normality
+## Tests for Normality(Recommendation)
 
-The Rec Likelihood data was tested for normality using a QQ plot and a Shapiro-Wilk test.
+The Recommendation Likelihood data was tested for normality using a QQ plot and a Shapiro-Wilk test.
 
 ```{r normality test}
 
@@ -114,7 +114,6 @@ The Rec Likelihood data was tested for normality using a QQ plot and a Shapiro-W
 qqnorm(survey_data$Recommendation.Likelihood,
        main = "Fig 3.0 - Q1: Recommendation Likelihood QQ Plot")
 qqline(survey_data$Recommendation.Likelihood)
-
 
 ```
 
@@ -131,6 +130,35 @@ print(results_sw)
 ```
 
 A Shapiro Wilk test was conducted on the Recommendation Likelihood data. From the output obtained our Test Statistic(W) was = 0.94, this value was close to 1 which indicates a fairly normal distribution with some deviations. As a result we assume normality and **accept the null hypothesis** as the p-value was 0.24 which was greater than the common alpha level of 0.05.
+
+## Tests for normality(Weekly Playtime)
+
+The Weekly playtime data was tested for normality using a QQ plot and a Shapiro-Wilk test.
+
+```{r normality test}
+hours_played <- as.numeric(
+  factor(survey_data$Weekly.playtime,
+         levels = c("1-5hrs", "6-15hrs", "16-30hrs", "31-50hrs", "51+hrs"),
+         exclude = NA))
+
+
+# Create a QQ plot of recommendation likelihood with a title
+qqnorm(hours_played,
+       main = "Fig 3.1 - Hours Played QQ Plot")
+qqline(hours_played)
+```
+
+The QQ Plot in Fig 3.1 shows that the data is not normally distributed. To confirm this, a Shapiro-Wilk test was conducted.
+
+```{r shapiro test}
+# Determine normality from shapiro test
+results_sw <- shapiro.test(hours_played)
+print(results_sw)
+#p_value <- results_sw$p.value
+#is_normal <- p_value > 0.05
+```
+
+A Shapiro Wilk test was conducted on the Weekly playtime data. From the output obtained our Test Statistic(W) was = 0.86, this value is much lower than 1 which indicates it does not follow normal distribution. As a result we do not assume normality and leads us to **reject the null hypothesis** as the p-value was 0.007156 which was less than the common alpha level of 0.05.
 
 ## Correlation Analysis
 
