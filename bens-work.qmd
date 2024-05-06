@@ -1,0 +1,116 @@
+---
+title: "TCA-3 Survey"
+author: "Ben McQuaile, Dylan Dockery, Luke Cassidy, Emily McCormack"
+format: pdf
+---
+
+## Overview
+
+This is our document detailing the work conducted by our team, VisionWeavers in surveying participants who agreed to take part in testing our game Shades of Solitude.
+
+## Survey Construction
+
+### Categories
+
+#### Demographics
+
+These survey questions are designed to help understand and segment our audience by characteristics such as age, gender and how much they play games. This helps to inform us make better decisions when designing the game. For example, more experienced gamers might find it easier.
+
+-   **What Gender do you identify as?**
+
+    -   Male
+    -   Female
+    -   Other
+
+-   **What is your Age Group?**
+
+    -   18-24
+    -   25-34
+    -   35-44
+    -   45-54
+    -   55-64
+    -   65+
+
+-   **How many hours would you play in games in a given week?**
+
+    -   1-5 Hours
+    -   6-15 Hours
+    -   16-30 Hours
+    -   31-50 Hours
+    -   51+ Hours
+
+#### Mechanics
+
+These questions are designed to help us improve the playability and overall enjoyment of our game.
+
+-   **How intuitive did you find the player controls?**
+    -   Very intuitive
+    -   Somewhat intuitive
+    -   Neutral
+    -   Somewhat unintuitive
+    -   Very unintuitive
+-   **Did you experience any difficulties with the player's controls?**
+    -   Yes (Please Specify)
+    -   No
+-   **How challenging did you find the puzzles in the game?**
+    -   Too Easy
+    -   Just Right
+    -   Neutral
+    -   Very Difficult
+    -   Frustratingly Difficult
+-   **Was there a particular puzzle that you felt was too difficult or too easy?**
+    -   Too Easy (Please Describe)
+    -   Too Difficult (Please Describe)
+    -   No
+
+#### Narrative
+These questions are designed to help us understand that the themes of our game come across to the player and which elements get these across best. It also helps identify areas that are weak in portraying the theme and need to be improved. 
+
+-   **How well do you think the game communicated its theme?**
+
+    -   Very clearly
+    -   Somewhat clearly
+    -   Neutral
+    -   Somewhat unclearly
+    -   Very unclear
+
+-   **Which elements of the game helped you understand the theme? (Select all that apply)**
+
+    -   Visuals
+    -   Puzzles
+    -   Audio
+    -   Text/dialogue
+    -   Other
+
+#### Audio
+
+These questions help determine the contribution of audio to the game's atmosphere,identifying effective and ineffective elements. Being able to distinguish on effective and ineffective elements help us shape the soundscape of the game to better suit the atmosphere. We can gather insights on how much work is needed on the audio for future releases.
+
+-   **How did you feel about the audio quality and its contribution to the game atmosphere?**
+
+    -   Enhanced the experience greatly
+    -   Somewhat enhanced the experience
+    -   Did not effect experience
+    -   Somewhat detracted from the experience
+    -   Greatly detracted from the experience
+
+-   **Were there any audio elements you found particularly effective?**
+
+    -   Yes (Please specify below)
+    -   No
+
+-   **Were there any audio elements you found particularly ineffective?**
+
+    -   Yes (Please specify below)
+    -   No
+
+#### General
+
+-   **On a scale of 1-10, how likely are you to recommend "Shades of Solitude" to others**
+
+    -   Range 1-10 (Not likely at all to Extremely likely)
+
+### Survey Analysis
+
+The data (N=`r nrow(survey_data)`) was collected from a convenience sample of participants who were asked to complete the survey online. The purpose of the survey was to gather information on a number of categories relating to game mechanics, visuals, audio and narrative.
+
