@@ -83,6 +83,8 @@ These questions are designed to help us improve the playability and overall enjo
 
 #### Audio
 
+These questions help determine the contribution of audio to the game's atmosphere,identifying effective and ineffective elements. Being able to distinguish on effective and ineffective elements help us shape the soundscape of the game to better suit the atmosphere. We can gather insights on how much work is needed on the audio for future releases.
+
 -   **How did you feel about the audio quality and its contribution to the game atmosphere?**
 
     -   Enhanced the experience greatly
@@ -111,19 +113,3 @@ These questions are designed to help us improve the playability and overall enjo
 
 The data (N=`r nrow(survey_data)`) was collected from a convenience sample of participants who were asked to complete the survey online. The purpose of the survey was to gather information on a number of categories relating to game mechanics, visuals, audio and narrative.
 
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
-```
-
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).
