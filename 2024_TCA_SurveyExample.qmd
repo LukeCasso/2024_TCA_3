@@ -50,7 +50,7 @@ This section provides basic descriptive statistics for the collected data. It in
 
 ### Recommendation Likelihood
 
-The Purchase Likelihood data was collected on a scale of 0 (Not Likely) to 10 (Very Likely). The data was analyzed to determine the median and standard deviation.
+The Recommendation Likelihood data was collected on a scale of 0 (Not Likely) to 10 (Very Likely). The data was analyzed to determine the median and standard deviation.
 
 ```{r summary statistics}
 median_pl <- median(survey_data$Recommendation.Likelihood)
@@ -58,7 +58,7 @@ sd_pl <- sd(survey_data$Recommendation.Likelihood)
 
 ```
 
-The median purchase likelihood score was `r median_pl` with a standard deviation of `r round(sd_pl, 2)`.
+The median Recommendation likelihood score was `r median_pl` with a standard deviation of `r round(sd_pl, 2)`.
 
 ```{r histogram likelihood}
 # Create a histogram of the Recommendation likelihood
@@ -72,20 +72,26 @@ hist(survey_data$Recommendation.Likelihood,
 
 ```
 
-The histogram in Fig 1.0 shows the distribution of purchase likelihood scores. The data appears to be left-skewed and unimodal.
+The histogram in Fig 1.0 shows the distribution of recommendation likelihood scores. The data appears to be left-skewed and unimodal.
 
 ```{r boxplot likelihood}
 # boxplot of Recommendation likelihood
-boxplot(survey_data$Purchase.Likelihood ~ survey_data$Preferred.Genre,
+
+num_Atmosphere <- as.numeric(
+  factor(survey_data$Overall.Atmosphere,
+         levels = c("Very engaging", "Somewhat engaging", "neutral", "Somewhat disengaging", "Very disengaging"),
+         exclude = NA))
+
+boxplot(survey_data$Recommendation.Likelihood ~ num_Atmosphere,
         survey_data,
         na.action = na.omit,
         col = "lightblue",
         outline = TRUE,
         border = "darkblue",
         horizontal = FALSE,
-        main = "Fig 2.0 - Q1: Purchase Likelihood by Genre",
-        xlab = "Preferred Genre",
-        ylab = "Purchase Likelihood")
+        main = "Fig 2.0 - Q1: Recommendation Likelihood by Atmosphere",
+        xlab = "Overall Atmosphere",
+        ylab = "Recommendation Likelihood")
 
 
 # set how many ticks to put on Y axis
@@ -94,7 +100,9 @@ axis(2, at = c(seq(0, 10, 1)))
 
 ```
 
-The boxplot in Fig 2.0 shows the purchase likelihood by preferred genre. The data is spread across the genres, with some outliers in the Action genre.
+The boxplot in Fig 2.0 shows the Recommendation Likelihood by Atmosphere. This measures the likelihood of recommending the game based on the atmosphere categories labeled as 1-5 respectively(1 - very engaging, 2 - somewhat engaging)etc. A very engaging(1) atmosphere displayed higher median scores between 8 and 9 with very little variability. A somewhat engaging(2) atmosphere displayed more variability with a lower median around 6 and included an outlier scoring around 3. Somewhat disengaging(4) was represented by a single data point which indicates limited data for this cater gory.
+
+Outlier tells us that the atmosphere was interesting but it might not be something they are massively interested in.
 
 ## Tests for Normality
 
