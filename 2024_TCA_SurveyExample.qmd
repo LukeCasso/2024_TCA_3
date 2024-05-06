@@ -160,26 +160,55 @@ print(results_sw)
 
 A Shapiro Wilk test was conducted on the Weekly playtime data. From the output obtained our Test Statistic(W) was = 0.86, this value is much lower than 1 which indicates it does not follow normal distribution. As a result we do not assume normality and leads us to **reject the null hypothesis** as the p-value was 0.007156 which was less than the common alpha level of 0.05.
 
+## Tests for Normality(Intuitive Controls)
+
+The QQ Plot in Fig 3.2 shows that the data is normally distributed. To confirm this, a Shapiro-Wilk test was conducted.
+
+```{r normailty test}
+intuitive_controls <- as.numeric(
+  factor(survey_data$Intuitive.Controls,
+         levels = c("Very intuitive", "Somewhat intuitive", "Neutral", "Somewhat unintuitive", "Very unintuitive"),
+         exclude = NA))
+
+# Create a QQ plot of intuitive_controls with a title
+qqnorm(intuitive_controls,
+       main = "Fig 3.2 - Intuitive Controls QQ Plot")
+qqline(intuitive_controls)
+
+```
+
+The QQ Plot in Fig 3.2 shows that the data is not normally distributed. To confirm this, a Shapiro-Wilk test was conducted.
+
+```{r shapiro test}
+# Determine normality from shapiro test
+results_sw <- shapiro.test(intuitive_controls)
+print(results_sw)
+#p_value <- results_sw$p.value
+#is_normal <- p_value > 0.05
+```
+
+A Shapiro Wilk test was conducted on the Weekly playtime data. From the output obtained our Test Statistic(W) was = 0.71, this value is much lower than 1 which indicates it does not follow normal distribution. As a result we do not assume normality and leads us to **reject the null hypothesis** as the p-value was 0.000005 which was less than the common alpha level of 0.05.
+
 ## Correlation Analysis
 
 ### Hours per week vs Reccomendation Likelihood (Numerical)
 
-This section investigates the relationships between two paired numerical variables. Both numerical variables were examined for normality (see previous section) and are considered normal. We may therefore use Pearson's correlation coefficient to assess the strength of the relationship between these numerical variables.
+This section investigates the relationships between two paired numerical variables. Both numerical variables were examined for normality. While Recommendation Likelihood was considered normal, Hours per week was not. However we stilled use Pearson's correlation coefficient to assess the strength of the relationship between these numerical variables.
 
 ```{r correlation analysis}
 # Scatterplot
-plot(survey_data$Hours.Week, survey_data$Purchase.Likelihood,
-     main = "Fig 3.0 - Q2: Hours per Week vs Purchase Likelihood",
+plot(hours_played, survey_data$Recommendation.Likelihood,
+     main = "Fig 4.0 - Q2: Hours per Week vs Recommendation Likelihood",
      xlab = "Hours per Week",
-     ylab = "Purchase Likelihood")
+     ylab = "Recommendation Likelihood")
 
 ```
 
-The scatterplot above shows the relationship between the number of hours played per week and the likelihood of purchasing in-game content. The data points are spread across the plot, indicating a potential relationship between the two variables.
+The scatterplot above shows the relationship between the number of hours played per week and the likelihood of recommending the game. The data points are spread across the plot, indicating a potential relationship between the two variables.
 
 ```{r pearson correlation test}
 # linear correlation num_genre vs num_recommend using spearman
-cor_results <- cor.test(survey_data$Hours.Week, survey_data$Purchase.Likelihood, method = "pearson")
+cor_results <- cor.test(hours_played, survey_data$Recommendation.Likelihood, method = "pearson")
 ```
 
 ```{r correlation output 1}
@@ -187,39 +216,30 @@ cor_results <- cor.test(survey_data$Hours.Week, survey_data$Purchase.Likelihood,
 cor_results
 ```
 
-A correlation test between the number of hours played per week and the likelihood of purchasing in-game content was conducted. The results of the correlation test indicate a `r if(cor_results$p.value < 0.05){"significant"}else{"non-significant"}` relationship between the number of hours played per week and the likelihood of purchasing in-game content. The estimated correlation is `r round(cor_results$estimate,2)`.
+A correlation test between the number of hours played per week and the likelihood of recommending the game was conducted. The results of the correlation test indicate a `r if(cor_results$p.value < 0.05){"significant"}else{"non-significant"}` relationship between the number of hours played per week and the likelihood of purchasing in-game content. The estimated correlation is `r round(cor_results$estimate,2)`.
 
-### Recommend vs Genre (Categorical)
+Based on these results, there is no substantial evidence to conclude that there is a meaningful or statistically significant correlation between the number of hours played and the likelihood of recommending the product.
 
-In this section, we will examine the relationship between the preferred game genre and the likelihood of recommending the game to a friend. We will convert the categorical data to numerical data and then calculate the correlation between the two variables. Both numerical variables were examined for normality and are considered normal. We may therefore use Spearman's correlation coefficient to assess the strength of the relationship between these categorical variables.
+### Hours Played vs Controls Intuitiveness (Catergorical)
 
-```{r categorical to numerical}
+In this section, we will examine the relationship between how intuitive the controls were and amount of hours people play games in a week . We will convert the categorical data to numerical data(done above) and then calculate the correlation between the two variables. Both numerical variables were examined for normality and are considered not normal. However we still used Spearman's correlation coefficient to assess the strength of the relationship between these categorical variables.
 
-# Converting categorical to numerical data
-num_recommend <- as.numeric(
-  factor(survey_data$Recommend,
-         levels = c("Definitely", "Probably", "Not Sure", "Probably Not", "Definitely Not"),
-         exclude = NA))
-
-num_genre <- as.numeric(
-  factor(survey_data$Preferred.Genre,
-         levels = c("Action", "Adventure", "Puzzle", "Strategy", "Other"),
-         exclude = NA))
+```         
 ```
 
 ```{r scatterplot}
-# plot linear correlation num_genre vs num_recommend
-plot(num_genre, num_recommend,
-     main = "Fig 4.0 - Q3: Genre vs Recommend",
-     xlab = "Preferred Genre",
-     ylab = "Recommend")
+# plot linear correlation hours_played vs intuitive controls
+plot(hours_played,intuitive_controls,
+     main = "Fig 4.0 - Q3: Hours played vs intuitive controls",
+     xlab = "Hours Played",
+     ylab = "Intuitive controls")
 ```
 
-The scatterplot above shows the relationship between the preferred game genre and the likelihood of recommending the game to a friend. The data points are spread across the plot, indicating a potential relationship between the two variables.
+The scatterplot above shows the relationship between hours played and the intuitiveness of the controls. The data points are spread across the plot, indicating a potential relationship between the two variables.
 
 ```{r spearman correlation test}
-# linear correlation num_genre vs num_recommend using spearman
-cor_results <- cor.test(num_genre, num_recommend,
+# linear correlation hours played vs intuitive controls using spearman
+cor_results <- cor.test(hours_played, intuitive_controls,
                         method = "spearman")
 ```
 
@@ -229,7 +249,9 @@ cor_results
 
 ```
 
-A correlation test between the preferred genre and the likelihood of recommending the game to a friend was conducted. The results of the correlation test indicate a `r if(cor_results$p.value < 0.05){"significant"}else{"non-significant"}` relationship between the preferred genre and the likelihood of recommending the game to a friend. The estimated correlation is `r round(cor_results$estimate,2)`.
+A correlation test between the hours played and the intuitiveness of the controls to was conducted. The results of the correlation test indicate a `r if(cor_results$p.value < 0.05){"significant"}else{"non-significant"}` relationship between the hours played and the likelihood of recommending the game to a friend. The estimated correlation is `r round(cor_results$estimate,2)`.
+
+The Spearman's rank correlation test shows a significant moderate negative correlation between the hours played and the ratings of intuitive controls. This could mean that players who spend more hours playing rate the controls as more intuitive. This is due to the labeling, for example( 1 - hours played = 1-5hrs and 1 - Intuitive controls = Very intuitive)
 
 ## Appendix A - Survey Questions
 
