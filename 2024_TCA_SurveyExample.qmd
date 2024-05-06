@@ -1,5 +1,5 @@
 ---
-title: "2024 - TCA-3 - Survey - 1"
+title: "2024 - TCA-3 - Survey"
 author: "Dylan Dockery, Ben McQuaile, Luke Cassidy, Emily McCormack"
 format: pdf
 date: "`r format(Sys.Date(), '%B %d %Y')`"
@@ -24,7 +24,6 @@ library(kableExtra)
 ## Overview
 
 This is our document detailing the work conducted by our team, VisionWeavers in surveying participants who agreed to take part in testing our game Shades of Solitude.
-
 
 ## Survey Construction
 
@@ -133,8 +132,7 @@ These questions help determine the contribution of audio to the game's atmospher
 
 ```{r load the CSV}
 # Load the data
-survey_data <- read.csv("data/Customer Feedback.csv")
-survey_data <- survey_data[-1,]
+survey_data <- read.csv("data/Customer_Feedback - dylan.csv")
 ```
 
 The data (N=`r nrow(survey_data)`) was collected from a convenience sample of participants who were asked to complete the survey online. The purpose of the survey was to gather information on a number of categories relating to game mechanic, playabilty, and in-game content.
@@ -297,7 +295,11 @@ This section investigates the relationships between two paired numerical variabl
 plot(hours_played, survey_data$Recommendation.Likelihood,
      main = "Fig 4.0 - Q2: Hours per Week vs Recommendation Likelihood",
      xlab = "Hours per Week",
-     ylab = "Recommendation Likelihood")
+     ylab = "Recommendation Likelihood",
+     xaxt = "n")
+axis(1, at = hours_played, labels = survey_data$Weekly.playtime, las = 1) 
+
+points(hours_played, survey_data$Recommendation.Likelihood)
 
 ```
 
@@ -329,7 +331,10 @@ In this section, we will examine the relationship between how intuitive the cont
 plot(hours_played,intuitive_controls,
      main = "Fig 4.0 - Q3: Hours played vs intuitive controls",
      xlab = "Hours Played",
-     ylab = "Intuitive controls")
+     ylab = "Intuitive controls",
+     xaxt = "n")
+axis(1, at = hours_played, labels = survey_data$Weekly.playtime, las = 1) 
+points(hours_played, intuitive_controls)
 ```
 
 The scatterplot above shows the relationship between hours played and the intuitiveness of the controls. The data points are spread across the plot, indicating a potential relationship between the two variables.
@@ -337,7 +342,7 @@ The scatterplot above shows the relationship between hours played and the intuit
 ```{r spearman correlation test}
 # linear correlation hours played vs intuitive controls using spearman
 cor_results <- cor.test(hours_played, intuitive_controls,
-                        method = "spearman")
+                        method = "spearman",exact=FALSE)
 ```
 
 ```{r correlation output 2}
@@ -350,31 +355,7 @@ A correlation test between the hours played and the intuitiveness of the control
 
 The Spearman's rank correlation test shows a significant moderate negative correlation between the hours played and the ratings of intuitive controls. This could mean that players who spend more hours playing rate the controls as more intuitive. This is due to the labeling, for example( 1 - hours played = 1-5hrs and 1 - Intuitive controls = Very intuitive)
 
-## Appendix A - Survey Questions
-
-### Category - Game Narrative
-
-1.  **How would you rate the overall game experience? (Numerical)**
-    -   Scale: 1 (Poor) to 10 (Excellent)
-2.  **How many hours do you play the game per week? (Numerical)**
-    -   Open numeric response
-3.  **What is your preferred game genre? (Categorical)**
-    -   Options: Action, Adventure, Puzzle, Strategy, Other
-4.  **On a scale of 1-10, how difficult do you find the game? (Numerical)**
-    -   Scale: 1 (Very Easy) to 10 (Very Hard)
-
-### Category - Game Mechanics
-
-1.  **Have you experienced any bugs while playing the game? (Categorical)**
-    -   Options: Yes, No
-2.  **Which feature of the game do you like the most? (Categorical)**
-    -   Options: Graphics, Storyline, Gameplay Mechanics, Multiplayer Mode, Other
-3.  **Would you recommend this game to a friend? (Categorical)**
-    -   Options: Definitely, Probably, Not Sure, Probably Not, Definitely Not
-4.  **How likely are you to purchase in-game content? (Numerical)**
-    -   Scale: 0 (Not Likely) to 10 (Very Likely)
-
-## Appendix B - Tables
+## Appendix A - Tables
 
 ### Categorical to Numerical
 
@@ -387,52 +368,13 @@ kable(table_cat_to_num, caption = "Table 1.0 - Categorical to Numerical Conversi
       col.names = c("Weekly Playtime", "Intuitive Controls"))
 ```
 
-## Appendix C - Survey Data
+## Appendix B - Survey Data
 
 Table 2.0 below shows the raw survey data collected from the participants.
 
 ```{r survey data, echo=FALSE}
 
 kable(survey_data, 
-      caption = "Table 2.0 - Raw Survey Data")
-
-```
-
-## Appendix D - More Illustrative Tables
-
-We can use the `kableExtra` package to create more elaborate tables - see [CRAN](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) and [rfortherestofus](https://rfortherestofus.com/2019/11/how-to-make-beautiful-tables-in-r) for more information.
-
-We can add color to the table using the `column_spec` function. The `spec_color` function can be used to specify the color based on the values in the column. The `spec_color` function can also be used to create a link to a website. The `spec_color` function can also be used to create a popover with additional information.
-
-```{r kableExtra color}
-mtcars[1:8, 1:8] %>%
-  kbl() %>%
-  kable_paper(full_width = F) %>%
-  column_spec(2, color = spec_color(mtcars$mpg[1:8]),
-              link = "https://haozhu233.github.io/kableExtra/") %>%
-  column_spec(6, color = "white",
-              background = spec_color(mtcars$drat[1:8], end = 0.7),
-              popover = paste("am:", mtcars$am[1:8]))
-```
-
-Finally, we can also replace numeric variables with plots in the table using `kableExtra`. The `spec_plot` function can be used to specify the plot type (boxplot, histogram, scatterplot, etc.) and the data to be plotted. The `spec_plot` function can also be used to specify the type of plot (line, point, polygon, etc.) and the data to be plotted.
-
-```{r kableExtra}
-
-mpg_list <- split(mtcars$mpg, mtcars$cyl)
-disp_list <- split(mtcars$disp, mtcars$cyl)
-inline_plot <- data.frame(cyl = c(4, 6, 8), mpg_box = "", mpg_hist = "",
-                          mpg_line1 = "", mpg_line2 = "",
-                          mpg_points1 = "", mpg_points2 = "", mpg_poly = "")
-inline_plot %>%
-  kbl(booktabs = TRUE) %>%
-  kable_paper(full_width = FALSE) %>%
-  column_spec(2, image = spec_boxplot(mpg_list)) %>%
-  column_spec(3, image = spec_hist(mpg_list)) %>%
-  column_spec(4, image = spec_plot(mpg_list, same_lim = TRUE)) %>%
-  column_spec(5, image = spec_plot(mpg_list, same_lim = FALSE)) %>%
-  column_spec(6, image = spec_plot(mpg_list, type = "p")) %>%
-  column_spec(7, image = spec_plot(mpg_list, disp_list, type = "p")) %>%
-  column_spec(8, image = spec_plot(mpg_list, polymin = 5))
+      caption = "Raw Survey Data")
 
 ```
