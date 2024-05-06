@@ -64,6 +64,7 @@ These questions are designed to help us improve the playability and overall enjo
     -   No
 
 #### Narrative
+These questions are designed to help us understand that the themes of our game come across to the player and which elements get these across best. It also helps identify areas that are weak in portraying the theme and need to be improved. 
 
 -   **How well do you think the game communicated its theme?**
 
