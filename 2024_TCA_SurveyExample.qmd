@@ -106,14 +106,14 @@ Outlier tells us that the atmosphere was interesting but it might not be somethi
 
 ## Tests for Normality
 
-The Purchase Likelihood data was tested for normality using a QQ plot and a Shapiro-Wilk test.
+The Rec Likelihood data was tested for normality using a QQ plot and a Shapiro-Wilk test.
 
 ```{r normality test}
 
-# Create a QQ plot of purchase likelihood with a title
-qqnorm(survey_data$Purchase.Likelihood,
-       main = "Fig 3.0 - Q1: Purchase Likelihood QQ Plot")
-qqline(survey_data$Purchase.Likelihood)
+# Create a QQ plot of recommendation likelihood with a title
+qqnorm(survey_data$Recommendation.Likelihood,
+       main = "Fig 3.0 - Q1: Recommendation Likelihood QQ Plot")
+qqline(survey_data$Recommendation.Likelihood)
 
 
 ```
@@ -122,16 +122,19 @@ The QQ Plot in Fig 3.0 shows that the data is normally distributed. To confirm t
 
 ```{r shapiro test}
 # Determine normality from shapiro test
-results_sw <- shapiro.test(survey_data$Purchase.Likelihood)
-p_value <- results_sw$p.value
-is_normal <- p_value > 0.05
+results_sw <- shapiro.test(survey_data$Recommendation.Likelihood)
+print(results_sw)
+#p_value <- results_sw$p.value
+#is_normal <- p_value > 0.05
+
+
 ```
 
-A `r results_sw$method` was conducted on the Purchase Likelihood data. From the output obtained we `r if(is_normal){"can"}else{"cannot"}` assume normality and **accept the null hypothesis** as the p-value (p=`r round(p_value, 3)`) is `r if(is_normal){"greater"}else{"less"}` than 0.05.
+A Shapiro Wilk test was conducted on the Recommendation Likelihood data. From the output obtained our Test Statistic(W) was = 0.94, this value was close to 1 which indicates a fairly normal distribution with some deviations. As a result we assume normality and **accept the null hypothesis** as the p-value was 0.24 which was greater than the common alpha level of 0.05.
 
 ## Correlation Analysis
 
-### Hours per week vs Purchase Likelihood (Numerical)
+### Hours per week vs Reccomendation Likelihood (Numerical)
 
 This section investigates the relationships between two paired numerical variables. Both numerical variables were examined for normality (see previous section) and are considered normal. We may therefore use Pearson's correlation coefficient to assess the strength of the relationship between these numerical variables.
 
