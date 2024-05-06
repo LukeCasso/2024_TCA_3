@@ -1,6 +1,6 @@
 ---
 title: "2024 - TCA - Survey - 1"
-author: "Niall McGuinness"
+author: "Dylan Dockery"
 format: html
 date: "`r format(Sys.Date(), '%B %d %Y')`"
 toc: true
@@ -21,50 +21,50 @@ if(!require("kableExtra"))
 library(kableExtra)
 ```
 
-
 ## Overview
-- What survey was conducted?
-- When and with whom was it conducted? (date, N (M, F, O))
-- How do the participants breakdown in terms of demographic?
-(sampling method (random, stratified, cluster, convenience), age, preference)
-- Who conducted the survey?
-- What was the purpose of the survey?
-- How were the results gathered?
-- How was user-testing carried out? conditions? (online, in-person, etc.)
-- What were the pre-conditions and information provided to the participants?
-- How were the results stored?
+
+-   What survey was conducted?
+-   When and with whom was it conducted? (date, N (M, F, O))
+-   How do the participants breakdown in terms of demographic? (sampling method (random, stratified, cluster, convenience), age, preference)
+-   Who conducted the survey?
+-   What was the purpose of the survey?
+-   How were the results gathered?
+-   How was user-testing carried out? conditions? (online, in-person, etc.)
+-   What were the pre-conditions and information provided to the participants?
+-   How were the results stored?
 
 ## Survey Analysis
 
 ```{r load the CSV}
 # Load the data
-survey_data <- read.csv("data/survey_data_1_20.csv")
+survey_data <- read.csv("data/Customer Feedback.csv")
 ```
-The data (N=`r nrow(survey_data)`) was collected from a convenience sample of participants who were asked to complete the survey online. The purpose of the survey was to gather information on a number of categories relating to game mechanic, playabilty, and in-game content. 
 
-The results were gathered using an online survey tool and the data was stored in a CSV file.
+The data (N=`r nrow(survey_data)`) was collected from a convenience sample of participants who were asked to complete the survey online. The purpose of the survey was to gather information on a number of categories relating to game mechanic, playabilty, and in-game content.
+
+The results were gathered using Google forms and the data was stored in a CSV file.
 
 ## Descriptive Statistics
 
 This section provides basic descriptive statistics for the collected data. It includes measures of central tendency and variability.
 
-### Purchase Likelihood
+### Recommendation Likelihood
 
-The Purchase Likelihood data was collected on a scale of 0 (Not Likely) to 10 (Very Likely). The data was analyzed to determine the median and standard deviation.
+The Recommendation Likelihood data was collected on a scale of 0 (Not Likely) to 10 (Very Likely). The data was analyzed to determine the median and standard deviation.
 
 ```{r summary statistics}
-median_pl <- median(survey_data$Purchase.Likelihood)
-sd_pl <- sd(survey_data$Purchase.Likelihood)
+median_pl <- median(survey_data$Recommendation.Likelihood)
+sd_pl <- sd(survey_data$Recommendation.Likelihood)
 
 ```
 
-The median purchase likelihood score was `r median_pl` with a standard deviation of `r round(sd_pl, 2)`.
+The median Recommendation likelihood score was `r median_pl` with a standard deviation of `r round(sd_pl, 2)`.
 
 ```{r histogram likelihood}
-# Create a histogram of the puchase likelihood
-hist(survey_data$Purchase.Likelihood,
-     main = "Fig 1.0 - Q1: Purchase Likelihood",
-     xlab = "Purchase Likelihood",
+# Create a histogram of the Recommendation likelihood
+hist(survey_data$Recommendation.Likelihood,
+     main = "Fig 1.0 - Q1: Recommendation Likelihood",
+     xlab = "Recommendation Likelihood",
      ylab = "# Respondants",
      col = "lightblue",
      border = "darkblue",
@@ -72,20 +72,26 @@ hist(survey_data$Purchase.Likelihood,
 
 ```
 
-The histogram in Fig 1.0 shows the distribution of purchase likelihood scores. The data appears to be right-skewed and unimodal.
+The histogram in Fig 1.0 shows the distribution of recommendation likelihood scores. The data appears to be left-skewed and unimodal.
 
 ```{r boxplot likelihood}
-# boxplot of purchase likelihood
-boxplot(survey_data$Purchase.Likelihood ~ survey_data$Preferred.Genre,
+# boxplot of Recommendation likelihood
+
+num_Atmosphere <- as.numeric(
+  factor(survey_data$Overall.Atmosphere,
+         levels = c("Very engaging", "Somewhat engaging", "neutral", "Somewhat disengaging", "Very disengaging"),
+         exclude = NA))
+
+boxplot(survey_data$Recommendation.Likelihood ~ num_Atmosphere,
         survey_data,
         na.action = na.omit,
         col = "lightblue",
         outline = TRUE,
         border = "darkblue",
         horizontal = FALSE,
-        main = "Fig 2.0 - Q1: Purchase Likelihood by Genre",
-        xlab = "Preferred Genre",
-        ylab = "Purchase Likelihood")
+        main = "Fig 2.0 - Q1: Recommendation Likelihood by Atmosphere",
+        xlab = "Overall Atmosphere",
+        ylab = "Recommendation Likelihood")
 
 
 # set how many ticks to put on Y axis
@@ -94,54 +100,115 @@ axis(2, at = c(seq(0, 10, 1)))
 
 ```
 
-The boxplot in Fig 2.0 shows the purchase likelihood by preferred genre. The data is spread across the genres, with some outliers in the Action genre.
+The boxplot in Fig 2.0 shows the Recommendation Likelihood by Atmosphere. This measures the likelihood of recommending the game based on the atmosphere categories labeled as 1-5 respectively(1 - very engaging, 2 - somewhat engaging)etc. A very engaging(1) atmosphere displayed higher median scores between 8 and 9 with very little variability. A somewhat engaging(2) atmosphere displayed more variability with a lower median around 6 and included an outlier scoring around 3. Somewhat disengaging(4) was represented by a single data point which indicates limited data for this cater gory.
 
-## Tests for Normality
+Outlier tells us that the atmosphere was interesting but it might not be something they are massively interested in.
 
-The Purchase Likelihood data was tested for normality using a QQ plot and a Shapiro-Wilk test.
+## Tests for Normality(Recommendation)
 
-```{r normality test}
+The Recommendation Likelihood data was tested for normality using a QQ plot and a Shapiro-Wilk test.
 
-# Create a QQ plot of purchase likelihood with a title
-qqnorm(survey_data$Purchase.Likelihood,
-       main = "Fig 3.0 - Q1: Purchase Likelihood QQ Plot")
-qqline(survey_data$Purchase.Likelihood)
+```{r normality test 1}
+
+# Create a QQ plot of recommendation likelihood with a title
+qqnorm(survey_data$Recommendation.Likelihood,
+       main = "Fig 3.0 - Q1: Recommendation Likelihood QQ Plot")
+qqline(survey_data$Recommendation.Likelihood)
+
+```
+
+The QQ Plot in Fig 3.0 shows that the data is normally distributed. To confirm this, a Shapiro-Wilk test was conducted.
+
+```{r shapiro test 1}
+# Determine normality from shapiro test
+results_sw <- shapiro.test(survey_data$Recommendation.Likelihood)
+print(results_sw)
+#p_value <- results_sw$p.value
+#is_normal <- p_value > 0.05
 
 
 ```
 
-The QQ Plot in Fig 3.0  shows that the data is normally distributed. To confirm this, a Shapiro-Wilk test was conducted.
+A Shapiro Wilk test was conducted on the Recommendation Likelihood data. From the output obtained our Test Statistic(W) was = 0.94, this value was close to 1 which indicates a fairly normal distribution with some deviations. As a result we assume normality and **accept the null hypothesis** as the p-value was 0.24 which was greater than the common alpha level of 0.05.
+
+## Tests for normality(Weekly Playtime)
+
+The Weekly playtime data was tested for normality using a QQ plot and a Shapiro-Wilk test.
+
+```{r normality test 2}
+hours_played <- as.numeric(
+  factor(survey_data$Weekly.playtime,
+         levels = c("1-5hrs", "6-15hrs", "16-30hrs", "31-50hrs", "51+hrs"),
+         exclude = NA))
+
+
+# Create a QQ plot of recommendation likelihood with a title
+qqnorm(hours_played,
+       main = "Fig 3.1 - Hours Played QQ Plot")
+qqline(hours_played)
+```
+
+The QQ Plot in Fig 3.1 shows that the data is not normally distributed. To confirm this, a Shapiro-Wilk test was conducted.
+
+```{r shapiro test 2}
+# Determine normality from shapiro test
+results_sw <- shapiro.test(hours_played)
+print(results_sw)
+#p_value <- results_sw$p.value
+#is_normal <- p_value > 0.05
+```
+
+A Shapiro Wilk test was conducted on the Weekly playtime data. From the output obtained our Test Statistic(W) was = 0.86, this value is much lower than 1 which indicates it does not follow normal distribution. As a result we do not assume normality and leads us to **reject the null hypothesis** as the p-value was 0.007156 which was less than the common alpha level of 0.05.
+
+## Tests for Normality(Intuitive Controls)
+
+The QQ Plot in Fig 3.2 shows that the data is normally distributed. To confirm this, a Shapiro-Wilk test was conducted.
+
+```{r normailty test 3}
+intuitive_controls <- as.numeric(
+  factor(survey_data$Intuitive.Controls,
+         levels = c("Very intuitive", "Somewhat intuitive", "Neutral", "Somewhat unintuitive", "Very unintuitive"),
+         exclude = NA))
+
+# Create a QQ plot of intuitive_controls with a title
+qqnorm(intuitive_controls,
+       main = "Fig 3.2 - Intuitive Controls QQ Plot")
+qqline(intuitive_controls)
+
+```
+
+The QQ Plot in Fig 3.2 shows that the data is not normally distributed. To confirm this, a Shapiro-Wilk test was conducted.
 
 ```{r shapiro test}
 # Determine normality from shapiro test
-results_sw <- shapiro.test(survey_data$Purchase.Likelihood)
-p_value <- results_sw$p.value
-is_normal <- p_value > 0.05
+results_sw <- shapiro.test(intuitive_controls)
+print(results_sw)
+#p_value <- results_sw$p.value
+#is_normal <- p_value > 0.05
 ```
 
-A `r results_sw$method` was conducted on the Purchase Likelihood data. From the output obtained we `r if(is_normal){"can"}else{"cannot"}` assume normality and **accept the null hypothesis** as the p-value (p=`r round(p_value, 3)`) is `r if(is_normal){"greater"}else{"less"}` than 0.05.
-
+A Shapiro Wilk test was conducted on the Weekly playtime data. From the output obtained our Test Statistic(W) was = 0.71, this value is much lower than 1 which indicates it does not follow normal distribution. As a result we do not assume normality and leads us to **reject the null hypothesis** as the p-value was 0.000005 which was less than the common alpha level of 0.05.
 
 ## Correlation Analysis
 
-### Hours per week vs Purchase Likelihood (Numerical)
+### Hours per week vs Reccomendation Likelihood (Numerical)
 
-This section investigates the relationships between two paired numerical variables. Both numerical variables were examined for normality (see previous section) and are considered normal. We may therefore use Pearson's correlation coefficient to assess the strength of the relationship between these numerical variables.
+This section investigates the relationships between two paired numerical variables. Both numerical variables were examined for normality. While Recommendation Likelihood was considered normal, Hours per week was not. However we stilled use Pearson's correlation coefficient to assess the strength of the relationship between these numerical variables.
 
 ```{r correlation analysis}
 # Scatterplot
-plot(survey_data$Hours.Week, survey_data$Purchase.Likelihood,
-     main = "Fig 3.0 - Q2: Hours per Week vs Purchase Likelihood",
+plot(hours_played, survey_data$Recommendation.Likelihood,
+     main = "Fig 4.0 - Q2: Hours per Week vs Recommendation Likelihood",
      xlab = "Hours per Week",
-     ylab = "Purchase Likelihood")
+     ylab = "Recommendation Likelihood")
 
 ```
 
-The scatterplot above shows the relationship between the number of hours played per week and the likelihood of purchasing in-game content. The data points are spread across the plot, indicating a potential relationship between the two variables.
+The scatterplot above shows the relationship between the number of hours played per week and the likelihood of recommending the game. The data points are spread across the plot, indicating a potential relationship between the two variables.
 
 ```{r pearson correlation test}
-# linear correlation num_genre vs num_recommend using spearman
-cor_results <- cor.test(survey_data$Hours.Week, survey_data$Purchase.Likelihood, method = "pearson")
+# linear correlation hours played vs recommendation likelihood using spearman
+cor_results <- cor.test(hours_played, survey_data$Recommendation.Likelihood, method = "pearson")
 ```
 
 ```{r correlation output 1}
@@ -149,39 +216,30 @@ cor_results <- cor.test(survey_data$Hours.Week, survey_data$Purchase.Likelihood,
 cor_results
 ```
 
-A correlation test between the number of hours played per week and the likelihood of purchasing in-game content was conducted. The results of the correlation test indicate a `r if(cor_results$p.value < 0.05){"significant"}else{"non-significant"}` relationship between the number of hours played per week and the likelihood of purchasing in-game content. The estimated correlation is `r round(cor_results$estimate,2)`.
+A correlation test between the number of hours played per week and the likelihood of recommending the game was conducted. The results of the correlation test indicate a `r if(cor_results$p.value < 0.05){"significant"}else{"non-significant"}` relationship between the number of hours played per week and the likelihood of purchasing in-game content. The estimated correlation is `r round(cor_results$estimate,2)`.
 
-### Recommend vs Genre (Categorical) 
+Based on these results, there is no substantial evidence to conclude that there is a meaningful or statistically significant correlation between the number of hours played and the likelihood of recommending the product.
 
-In this section, we will examine the relationship between the preferred game genre and the likelihood of recommending the game to a friend. We will convert the categorical data to numerical data and then calculate the correlation between the two variables. Both numerical variables were examined for normality and are considered normal. We may therefore use Spearman's correlation coefficient to assess the strength of the relationship between these categorical variables.
+### Hours Played vs Controls Intuitiveness (Catergorical)
 
-```{r categorical to numerical}
+In this section, we will examine the relationship between how intuitive the controls were and amount of hours people play games in a week . We will convert the categorical data to numerical data(done above) and then calculate the correlation between the two variables. Both numerical variables were examined for normality and are considered not normal. However we still used Spearman's correlation coefficient to assess the strength of the relationship between these categorical variables.
 
-# Converting categorical to numerical data
-num_recommend <- as.numeric(
-  factor(survey_data$Recommend,
-         levels = c("Definitely", "Probably", "Not Sure", "Probably Not", "Definitely Not"),
-         exclude = NA))
-
-num_genre <- as.numeric(
-  factor(survey_data$Preferred.Genre,
-         levels = c("Action", "Adventure", "Puzzle", "Strategy", "Other"),
-         exclude = NA))
+```         
 ```
 
 ```{r scatterplot}
-# plot linear correlation num_genre vs num_recommend
-plot(num_genre, num_recommend,
-     main = "Fig 4.0 - Q3: Genre vs Recommend",
-     xlab = "Preferred Genre",
-     ylab = "Recommend")
+# plot linear correlation hours_played vs intuitive controls
+plot(hours_played,intuitive_controls,
+     main = "Fig 4.0 - Q3: Hours played vs intuitive controls",
+     xlab = "Hours Played",
+     ylab = "Intuitive controls")
 ```
 
-The scatterplot above shows the relationship between the preferred game genre and the likelihood of recommending the game to a friend. The data points are spread across the plot, indicating a potential relationship between the two variables.
+The scatterplot above shows the relationship between hours played and the intuitiveness of the controls. The data points are spread across the plot, indicating a potential relationship between the two variables.
 
 ```{r spearman correlation test}
-# linear correlation num_genre vs num_recommend using spearman
-cor_results <- cor.test(num_genre, num_recommend,
+# linear correlation hours played vs intuitive controls using spearman
+cor_results <- cor.test(hours_played, intuitive_controls,
                         method = "spearman")
 ```
 
@@ -191,12 +249,14 @@ cor_results
 
 ```
 
-A correlation test between the preferred genre and the likelihood of recommending the game to a friend was conducted. The results of the correlation test indicate a `r if(cor_results$p.value < 0.05){"significant"}else{"non-significant"}` relationship between the preferred genre and the likelihood of recommending the game to a friend. The estimated correlation is `r round(cor_results$estimate,2)`.
+A correlation test between the hours played and the intuitiveness of the controls to was conducted. The results of the correlation test indicate a `r if(cor_results$p.value < 0.05){"significant"}else{"non-significant"}` relationship between the hours played and the likelihood of recommending the game to a friend. The estimated correlation is `r round(cor_results$estimate,2)`.
 
+The Spearman's rank correlation test shows a significant moderate negative correlation between the hours played and the ratings of intuitive controls. This could mean that players who spend more hours playing rate the controls as more intuitive. This is due to the labeling, for example( 1 - hours played = 1-5hrs and 1 - Intuitive controls = Very intuitive)
 
 ## Appendix A - Survey Questions
 
 ### Category - Game Narrative
+
 1.  **How would you rate the overall game experience? (Numerical)**
     -   Scale: 1 (Poor) to 10 (Excellent)
 2.  **How many hours do you play the game per week? (Numerical)**
@@ -206,8 +266,8 @@ A correlation test between the preferred genre and the likelihood of recommendin
 4.  **On a scale of 1-10, how difficult do you find the game? (Numerical)**
     -   Scale: 1 (Very Easy) to 10 (Very Hard)
 
-### Category - Game Mechanics    
-    
+### Category - Game Mechanics
+
 1.  **Have you experienced any bugs while playing the game? (Categorical)**
     -   Options: Yes, No
 2.  **Which feature of the game do you like the most? (Categorical)**
@@ -216,18 +276,18 @@ A correlation test between the preferred genre and the likelihood of recommendin
     -   Options: Definitely, Probably, Not Sure, Probably Not, Definitely Not
 4.  **How likely are you to purchase in-game content? (Numerical)**
     -   Scale: 0 (Not Likely) to 10 (Very Likely)
-    
+
 ## Appendix B - Tables
 
-### Categorical to Numerical 
+### Categorical to Numerical
 
-Table 1.0 below shows the results of converting the categorical data to numerical data for the preferred game genre and the likelihood of recommending the game to a friend.
+Table 1.0 below shows the results of converting the categorical data to numerical data for the hours played and controls
 
 ```{r table and plot, echo=FALSE}
-table_cat_to_num <- data.frame(num_recommend, num_genre)
+table_cat_to_num <- data.frame(hours_played,intuitive_controls)
 
 kable(table_cat_to_num, caption = "Table 1.0 - Categorical to Numerical Conversion",
-      col.names = c("Recommend", "Genre"))
+      col.names = c("Weekly Playtime", "Intuitive Controls"))
 ```
 
 ## Appendix C - Survey Data
@@ -243,12 +303,11 @@ kable(survey_data,
 
 ## Appendix D - More Illustrative Tables
 
-We can use the `kableExtra` package to create more elaborate tables - see
-[CRAN](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) and [rfortherestofus](https://rfortherestofus.com/2019/11/how-to-make-beautiful-tables-in-r) for more information.
+We can use the `kableExtra` package to create more elaborate tables - see [CRAN](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) and [rfortherestofus](https://rfortherestofus.com/2019/11/how-to-make-beautiful-tables-in-r) for more information.
 
 We can add color to the table using the `column_spec` function. The `spec_color` function can be used to specify the color based on the values in the column. The `spec_color` function can also be used to create a link to a website. The `spec_color` function can also be used to create a popover with additional information.
 
-``` {r kableExtra color}  
+```{r kableExtra color}
 mtcars[1:8, 1:8] %>%
   kbl() %>%
   kable_paper(full_width = F) %>%
@@ -261,8 +320,7 @@ mtcars[1:8, 1:8] %>%
 
 Finally, we can also replace numeric variables with plots in the table using `kableExtra`. The `spec_plot` function can be used to specify the plot type (boxplot, histogram, scatterplot, etc.) and the data to be plotted. The `spec_plot` function can also be used to specify the type of plot (line, point, polygon, etc.) and the data to be plotted.
 
-
-```{r kableExtra}  
+```{r kableExtra}
 
 mpg_list <- split(mtcars$mpg, mtcars$cyl)
 disp_list <- split(mtcars$disp, mtcars$cyl)
