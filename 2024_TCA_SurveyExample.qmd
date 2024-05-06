@@ -38,6 +38,8 @@ library(kableExtra)
 ```{r load the CSV}
 # Load the data
 survey_data <- read.csv("data/Customer Feedback.csv")
+survey_data <- survey_data[-1, , drop = FALSE]
+
 ```
 
 The data (N=`r nrow(survey_data)`) was collected from a convenience sample of participants who were asked to complete the survey online. The purpose of the survey was to gather information on a number of categories relating to game mechanic, playabilty, and in-game content.
@@ -62,7 +64,8 @@ The median Recommendation likelihood score was `r median_pl` with a standard dev
 
 ```{r histogram likelihood}
 # Create a histogram of the Recommendation likelihood
-hist(survey_data$Recommendation.Likelihood,
+recommend <- as.numeric(survey_data$Recommendation.Likelihood)
+hist(recommend,
      main = "Fig 1.0 - Q1: Recommendation Likelihood",
      xlab = "Recommendation Likelihood",
      ylab = "# Respondants",
@@ -82,7 +85,7 @@ num_Atmosphere <- as.numeric(
          levels = c("Very engaging", "Somewhat engaging", "neutral", "Somewhat disengaging", "Very disengaging"),
          exclude = NA))
 
-boxplot(survey_data$Recommendation.Likelihood ~ num_Atmosphere,
+boxplot(recommend ~ num_Atmosphere,
         survey_data,
         na.action = na.omit,
         col = "lightblue",
@@ -111,9 +114,9 @@ The Recommendation Likelihood data was tested for normality using a QQ plot and 
 ```{r normality test 1}
 
 # Create a QQ plot of recommendation likelihood with a title
-qqnorm(survey_data$Recommendation.Likelihood,
+qqnorm(recommend,
        main = "Fig 3.0 - Q1: Recommendation Likelihood QQ Plot")
-qqline(survey_data$Recommendation.Likelihood)
+qqline(recommend)
 
 ```
 
@@ -121,7 +124,7 @@ The QQ Plot in Fig 3.0 shows that the data is normally distributed. To confirm t
 
 ```{r shapiro test 1}
 # Determine normality from shapiro test
-results_sw <- shapiro.test(survey_data$Recommendation.Likelihood)
+results_sw <- shapiro.test(recommend)
 print(results_sw)
 #p_value <- results_sw$p.value
 #is_normal <- p_value > 0.05
@@ -197,7 +200,7 @@ This section investigates the relationships between two paired numerical variabl
 
 ```{r correlation analysis}
 # Scatterplot
-plot(hours_played, survey_data$Recommendation.Likelihood,
+plot(hours_played,recommend,
      main = "Fig 4.0 - Q2: Hours per Week vs Recommendation Likelihood",
      xlab = "Hours per Week",
      ylab = "Recommendation Likelihood")
@@ -208,7 +211,7 @@ The scatterplot above shows the relationship between the number of hours played 
 
 ```{r pearson correlation test}
 # linear correlation hours played vs recommendation likelihood using spearman
-cor_results <- cor.test(hours_played, survey_data$Recommendation.Likelihood, method = "pearson")
+cor_results <- cor.test(hours_played, recommend, method = "pearson")
 ```
 
 ```{r correlation output 1}
