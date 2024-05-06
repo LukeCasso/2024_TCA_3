@@ -1,6 +1,6 @@
 ---
 title: "2024 - TCA - Survey - 1"
-author: "Niall McGuinness"
+author: "Dylan Dockery"
 format: html
 date: "`r format(Sys.Date(), '%B %d %Y')`"
 toc: true
@@ -108,7 +108,7 @@ Outlier tells us that the atmosphere was interesting but it might not be somethi
 
 The Recommendation Likelihood data was tested for normality using a QQ plot and a Shapiro-Wilk test.
 
-```{r normality test}
+```{r normality test 1}
 
 # Create a QQ plot of recommendation likelihood with a title
 qqnorm(survey_data$Recommendation.Likelihood,
@@ -119,7 +119,7 @@ qqline(survey_data$Recommendation.Likelihood)
 
 The QQ Plot in Fig 3.0 shows that the data is normally distributed. To confirm this, a Shapiro-Wilk test was conducted.
 
-```{r shapiro test}
+```{r shapiro test 1}
 # Determine normality from shapiro test
 results_sw <- shapiro.test(survey_data$Recommendation.Likelihood)
 print(results_sw)
@@ -135,7 +135,7 @@ A Shapiro Wilk test was conducted on the Recommendation Likelihood data. From th
 
 The Weekly playtime data was tested for normality using a QQ plot and a Shapiro-Wilk test.
 
-```{r normality test}
+```{r normality test 2}
 hours_played <- as.numeric(
   factor(survey_data$Weekly.playtime,
          levels = c("1-5hrs", "6-15hrs", "16-30hrs", "31-50hrs", "51+hrs"),
@@ -150,7 +150,7 @@ qqline(hours_played)
 
 The QQ Plot in Fig 3.1 shows that the data is not normally distributed. To confirm this, a Shapiro-Wilk test was conducted.
 
-```{r shapiro test}
+```{r shapiro test 2}
 # Determine normality from shapiro test
 results_sw <- shapiro.test(hours_played)
 print(results_sw)
@@ -164,7 +164,7 @@ A Shapiro Wilk test was conducted on the Weekly playtime data. From the output o
 
 The QQ Plot in Fig 3.2 shows that the data is normally distributed. To confirm this, a Shapiro-Wilk test was conducted.
 
-```{r normailty test}
+```{r normailty test 3}
 intuitive_controls <- as.numeric(
   factor(survey_data$Intuitive.Controls,
          levels = c("Very intuitive", "Somewhat intuitive", "Neutral", "Somewhat unintuitive", "Very unintuitive"),
@@ -207,7 +207,7 @@ plot(hours_played, survey_data$Recommendation.Likelihood,
 The scatterplot above shows the relationship between the number of hours played per week and the likelihood of recommending the game. The data points are spread across the plot, indicating a potential relationship between the two variables.
 
 ```{r pearson correlation test}
-# linear correlation num_genre vs num_recommend using spearman
+# linear correlation hours played vs recommendation likelihood using spearman
 cor_results <- cor.test(hours_played, survey_data$Recommendation.Likelihood, method = "pearson")
 ```
 
@@ -281,13 +281,13 @@ The Spearman's rank correlation test shows a significant moderate negative corre
 
 ### Categorical to Numerical
 
-Table 1.0 below shows the results of converting the categorical data to numerical data for the preferred game genre and the likelihood of recommending the game to a friend.
+Table 1.0 below shows the results of converting the categorical data to numerical data for the hours played and controls
 
 ```{r table and plot, echo=FALSE}
-table_cat_to_num <- data.frame(num_recommend, num_genre)
+table_cat_to_num <- data.frame(hours_played,intuitive_controls)
 
 kable(table_cat_to_num, caption = "Table 1.0 - Categorical to Numerical Conversion",
-      col.names = c("Recommend", "Genre"))
+      col.names = c("Weekly Playtime", "Intuitive Controls"))
 ```
 
 ## Appendix C - Survey Data
