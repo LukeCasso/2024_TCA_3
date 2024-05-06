@@ -48,23 +48,23 @@ The results were gathered using Google forms and the data was stored in a CSV fi
 
 This section provides basic descriptive statistics for the collected data. It includes measures of central tendency and variability.
 
-### Purchase Likelihood
+### Recommendation Likelihood
 
 The Purchase Likelihood data was collected on a scale of 0 (Not Likely) to 10 (Very Likely). The data was analyzed to determine the median and standard deviation.
 
 ```{r summary statistics}
-median_pl <- median(survey_data$Purchase.Likelihood)
-sd_pl <- sd(survey_data$Purchase.Likelihood)
+median_pl <- median(survey_data$Recommendation.Likelihood)
+sd_pl <- sd(survey_data$Recommendation.Likelihood)
 
 ```
 
 The median purchase likelihood score was `r median_pl` with a standard deviation of `r round(sd_pl, 2)`.
 
 ```{r histogram likelihood}
-# Create a histogram of the puchase likelihood
-hist(survey_data$Purchase.Likelihood,
-     main = "Fig 1.0 - Q1: Purchase Likelihood",
-     xlab = "Purchase Likelihood",
+# Create a histogram of the Recommendation likelihood
+hist(survey_data$Recommendation.Likelihood,
+     main = "Fig 1.0 - Q1: Recommendation Likelihood",
+     xlab = "Recommendation Likelihood",
      ylab = "# Respondants",
      col = "lightblue",
      border = "darkblue",
@@ -72,10 +72,10 @@ hist(survey_data$Purchase.Likelihood,
 
 ```
 
-The histogram in Fig 1.0 shows the distribution of purchase likelihood scores. The data appears to be right-skewed and unimodal.
+The histogram in Fig 1.0 shows the distribution of purchase likelihood scores. The data appears to be left-skewed and unimodal.
 
 ```{r boxplot likelihood}
-# boxplot of purchase likelihood
+# boxplot of Recommendation likelihood
 boxplot(survey_data$Purchase.Likelihood ~ survey_data$Preferred.Genre,
         survey_data,
         na.action = na.omit,
